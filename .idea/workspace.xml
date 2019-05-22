@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="00e2e4e0-d703-4f24-9102-0150ee818d01" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/UI/RegisterFrame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/UI/RegisterPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controlers/KursanciControler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controlers/KursanciControler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/InstruktorzyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/InstruktorzyEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/KursanciEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/KursanciEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UI/LoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/LoginPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/UI/LoginPanel.class" beforeDir="false" />
-    </list>
+    <list default="true" id="00e2e4e0-d703-4f24-9102-0150ee818d01" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -137,7 +128,7 @@
       <file leaf-file-name="RegisterPanel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/UI/RegisterPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
+            <state relative-caret-position="1190">
               <caret line="79" column="33" selection-start-line="79" selection-start-column="33" selection-end-line="79" selection-end-column="33" />
               <folding>
                 <element signature="e#3049#3050#0" expanded="true" />
@@ -302,30 +293,6 @@
               <item name="SzkolaJazdy_BD1" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Controlers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SzkolaJazdy_BD1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SzkolaJazdy_BD1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Entities" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SzkolaJazdy_BD1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SzkolaJazdy_BD1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="UI" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SzkolaJazdy_BD1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SzkolaJazdy_BD1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -466,16 +433,15 @@
       <option name="presentableId" value="Default" />
       <updated>1558095277588</updated>
       <workItem from="1558095279921" duration="9265000" />
-      <workItem from="1558529615130" duration="12215000" />
+      <workItem from="1558529615130" duration="12536000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21480000" />
+    <option name="totallyTimeSpent" value="21801000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="5" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
@@ -495,10 +461,10 @@
       <window_info anchor="bottom" id="Java Enterprise" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="bottom" id="Version Control" order="4" />
-      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.32943678" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.32943678" />
       <window_info anchor="bottom" id="Terminal" order="0" />
-      <window_info id="Persistence" order="0" sideWeight="0.24881141" side_tool="true" visible="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.7511886" visible="true" weight="0.25" />
+      <window_info id="Persistence" order="0" sideWeight="0.24760893" side_tool="true" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.7523911" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="7" />
       <window_info anchor="right" id="Theme Preview" order="4" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -848,7 +814,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/UI/RegisterPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
+        <state relative-caret-position="1190">
           <caret line="79" column="33" selection-start-line="79" selection-start-column="33" selection-end-line="79" selection-end-column="33" />
           <folding>
             <element signature="e#3049#3050#0" expanded="true" />
