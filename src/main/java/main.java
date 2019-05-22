@@ -4,7 +4,7 @@ import UI.LoginFrame;
 
 public class main {
     public static void main(String[] args) {
-        KursanciControler kc = new KursanciControler();
+       // KursanciControler kc = new KursanciControler();
         new LoginFrame();
 
 
