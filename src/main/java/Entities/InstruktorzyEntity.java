@@ -8,6 +8,8 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "INSTRUKTORZY", schema = "SZKOLAJAZDY", catalog = "")
 public class InstruktorzyEntity {
+    @Id
+    @GeneratedValue(strategy=GenerationType.TABLE)
     private long instruktorId;
     private String imie;
     private String nazwisko;
@@ -17,9 +19,6 @@ public class InstruktorzyEntity {
     private String email;
     private String haslo;
     private long czyAdmin;
-
-
-
 
     @Id
     @Column(name = "INSTRUKTOR_ID")

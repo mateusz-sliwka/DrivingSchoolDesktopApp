@@ -22,11 +22,14 @@ class LoginPanel extends JPanel implements ActionListener {
     JLabel typ = new JLabel("Wybierz typ konta:");
     JComboBox<String> typBox = new JComboBox<String>(typy);
     JLabel komunikat = new JLabel("<html><font color='red'>Podane dane logowania są nieprawidłowe.</html>");
+    JButton register = new JButton("Załóż konto");
 
     JButton zaloguj = new JButton("Zaloguj");
 
     LoginPanel() {
+        this.setFocusable(true);
         zaloguj.addActionListener(this);
+        register.addActionListener(this);
         this.add(title);
         this.add(loginLabel);
         this.add(login);
@@ -35,6 +38,7 @@ class LoginPanel extends JPanel implements ActionListener {
         this.add(typ);
         this.add(typBox);
         this.add(zaloguj);
+        this.add(register);
         this.add(komunikat);
         komunikat.setVisible(false);
         this.setVisible(true);
@@ -43,6 +47,9 @@ class LoginPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+        if(source==register){
+            new RegisterFrame();
+        }
         if(source==zaloguj){
             if(typBox.getSelectedItem().toString()=="Kursant") {
                 KursanciEntity kursant = new KursanciControler().login(login.getText(), haslo.getText());

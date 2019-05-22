@@ -1,22 +1,27 @@
 package Entities;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "KURSANCI", schema = "SZKOLAJAZDY", catalog = "")
 public class KursanciEntity {
+    @Id
+    @GeneratedValue(strategy=GenerationType.TABLE)
     private long kursantId;
     private String imie;
     private String nazwisko;
-    private Long pesel;
+    private String pesel;
     private String email;
-    private Long pkk;
+    private String pkk;
     private String haslo;
-    private Time dataRejestracji;
+    private Date dataRejestracji;
 
     @Id
     @Column(name = "KURSANT_ID")
+    @GeneratedValue(strategy=GenerationType.TABLE)
     public long getKursantId() {
         return kursantId;
     }
@@ -47,11 +52,11 @@ public class KursanciEntity {
 
     @Basic
     @Column(name = "PESEL")
-    public Long getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
-    public void setPesel(Long pesel) {
+    public void setPesel(String pesel) {
         this.pesel = pesel;
     }
 
@@ -67,11 +72,11 @@ public class KursanciEntity {
 
     @Basic
     @Column(name = "PKK")
-    public Long getPkk() {
+    public String getPkk() {
         return pkk;
     }
 
-    public void setPkk(Long pkk) {
+    public void setPkk(String pkk) {
         this.pkk = pkk;
     }
 
@@ -87,11 +92,11 @@ public class KursanciEntity {
 
     @Basic
     @Column(name = "DATA_REJESTRACJI")
-    public Time getDataRejestracji() {
+    public Date getDataRejestracji() {
         return dataRejestracji;
     }
 
-    public void setDataRejestracji(Time dataRejestracji) {
+    public void setDataRejestracji(Date dataRejestracji) {
         this.dataRejestracji = dataRejestracji;
     }
 
