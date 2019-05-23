@@ -23,13 +23,14 @@ class LoginPanel extends JPanel implements ActionListener {
     JComboBox<String> typBox = new JComboBox<String>(typy);
     JLabel komunikat = new JLabel("<html><font color='red'>Podane dane logowania są nieprawidłowe.</html>");
     JButton register = new JButton("Załóż konto");
-
+    JButton close = new JButton("Zamknij program");
     JButton zaloguj = new JButton("Zaloguj");
 
     LoginPanel() {
         this.setFocusable(true);
         zaloguj.addActionListener(this);
         register.addActionListener(this);
+        close.addActionListener(this);
         this.add(title);
         this.add(loginLabel);
         this.add(login);
@@ -39,6 +40,7 @@ class LoginPanel extends JPanel implements ActionListener {
         this.add(typBox);
         this.add(zaloguj);
         this.add(register);
+        this.add(close);
         this.add(komunikat);
         komunikat.setVisible(false);
         this.setVisible(true);
@@ -76,6 +78,14 @@ class LoginPanel extends JPanel implements ActionListener {
                 else{
                     zalogowano();
                     new InstructorFrame(instruktor);}
+            }
+
+        }
+        else if (source == close) {
+            int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz zamknąć program?", "Potwierdź zamykanie", JOptionPane.YES_NO_OPTION);
+            if (decyzja == 0) {
+                Window win = SwingUtilities.getWindowAncestor(this);
+                ((Window) win).dispose();
             }
         }
     }

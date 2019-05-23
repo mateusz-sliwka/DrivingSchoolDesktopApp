@@ -9,7 +9,7 @@ public class LoginFrame extends JFrame {
 
     public LoginFrame() {
         super("Logowanie");
-        this.setSize(new Dimension(280, 250));
+        this.setSize(new Dimension(280, 280));
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panel);
         this.setVisible(true);
