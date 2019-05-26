@@ -1,30 +1,32 @@
 package UI;
 
-import Controlers.InstruktorzyControler;
-import Controlers.KursanciControler;
-import Controlers.RezerwacjeControler;
-import Controlers.UslugiControler;
+import Controlers.*;
 import Entities.InstruktorzyEntity;
+import Entities.KategorieInstruktorowEntity;
+import Entities.KursanciEntity;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 class InstruktorzyPanel extends JPanel implements ActionListener {
     private static final long serialVersionUID = 1;
     private InstruktorzyEntity current;
     JLabel login = new JLabel();
-    JButton logout = new JButton("Wyloguj się");
-    JButton close = new JButton("Zamknij program");
+
     JMenuBar pasek = new JMenuBar();
     JButton refresh = new JButton("Refresh");
     JButton delete = new JButton("Usuń pozycję");
     JButton edit = new JButton("Edytuj pozycje");
-    String[] kolumny = {"ID", "Usługa", "Kursant", "Instruktor", "Data dodania"};
+    JButton przypisz = new JButton("Przypisz kategorie");
+    String[] kolumny = {"ID", "Imie", "Nazwisko", "Start pracy", "Koniec pracy","Email","Kategorie"};
     JTable rezerwacjeTable = new JTable();
-    JButton add = new JButton("Dodaj rezerwacje");
+    JButton add = new JButton("Dodaj instruktora");
     DefaultTableModel model = new DefaultTableModel(kolumny, 0);
     JScrollPane pane = new JScrollPane(rezerwacjeTable);
     InstruktorzyControler ic = new InstruktorzyControler();
@@ -33,15 +35,38 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
     UslugiControler uc = new UslugiControler();
 
     public void refreshList() {
+        ic = new InstruktorzyControler();
+        model.setRowCount(0);
+        List<InstruktorzyEntity> instruktorzy = ic.getAll();
+        for (int i = 0; i < instruktorzy.size(); i++) {
+            String kategorie="";
+            KategorieControler kc = new KategorieControler();
+            Iterator<KategorieInstruktorowEntity> iterator;
+            Collection<KategorieInstruktorowEntity> kolekcja = instruktorzy.get(i).getKategorieInstruktorowsByInstruktorId();
+            for(KategorieInstruktorowEntity kie: kolekcja){
+                kategorie+=kc.getByID(kie.getKategoriaId()).getSymbol();
+            }
+            if(instruktorzy.get(i).getKategorieInstruktorowsByInstruktorId().toArray().length!=0)
+            System.out.println((KategorieInstruktorowEntity)instruktorzy.get(i).getKategorieInstruktorowsByInstruktorId().toArray()[0]);
 
+            String[] zawartosc = {Integer.toString((int)instruktorzy.get(i).getInstruktorId()),
+                    instruktorzy.get(i).getImie(),
+                    instruktorzy.get(i).getNazwisko(),
+                    instruktorzy.get(i).getEmail(),
+                    instruktorzy.get(i).getGodzRozpoczecia(),
+                    instruktorzy.get(i).getGodzZakonczenia(),
+                    kategorie
+                    };
+            model.addRow(zawartosc);
+        }
     }
 
     InstruktorzyPanel(InstruktorzyEntity current) {
         edit.addActionListener(this);
-        logout.addActionListener(this);
-        close.addActionListener(this);
+
         add.addActionListener(this);
         refresh.addActionListener(this);
+        przypisz.addActionListener(this);
         rezerwacjeTable.setFillsViewportHeight(true);
         rezerwacjeTable.setModel(model);
         rezerwacjeTable.setAutoCreateRowSorter(true);
@@ -55,10 +80,9 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
         this.add(add);
         this.add(edit);
         this.add(delete);
-        this.add(logout);
-        this.add(close);
-        if(current.getCzyAdmin()==0)
-        {
+        this.add(przypisz);
+
+        if (current.getCzyAdmin() == 0) {
             delete.setVisible(false);
         }
         refreshList();
@@ -71,31 +95,24 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
         if (source == refresh) {
             refreshList();
         }
-        if (source == logout) {
-            int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz się wylogowac?", "Potwierdź wylogowanie", JOptionPane.YES_NO_OPTION);
-            if (decyzja == 0) {
-                new LoginFrame();
-                Window win = SwingUtilities.getWindowAncestor(this);
-                ((Window) win).dispose();
-            }
-        } else if (source == close) {
-            int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz zamknąć program?", "Potwierdź zamykanie", JOptionPane.YES_NO_OPTION);
-            if (decyzja == 0) {
-                Window win = SwingUtilities.getWindowAncestor(this);
-                ((Window) win).dispose();
-            }
+
+        if (source==przypisz){
+            ic=new InstruktorzyControler();
+            long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
+            new AddCategoryToInstructorFrame(ID,this);
+
         }
         if (source == delete) {
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            rc.deleteByID(ID);
+            ic.deleteByID(ID);
             refreshList();
         }
         if (source == edit) {
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            new EditReservationFrame(ID,current.getCzyAdmin());
+            new EditInstruktorFrame(ID, this);
         }
         if (source == add) {
-            new AddReservationFrame(current.getCzyAdmin());
+            new AddInstructorFrame(this);
         }
     }
 

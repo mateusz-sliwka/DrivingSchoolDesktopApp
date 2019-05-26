@@ -9,7 +9,7 @@ public class HibernateSequencesEntity {
     private Long nextVal;
 
     @Id
-    @Column(name = "SEQUENCE_NAME")
+    @Column(name = "SEQUENCE_NAME", nullable = false, length = 255)
     public String getSequenceName() {
         return sequenceName;
     }
@@ -19,7 +19,7 @@ public class HibernateSequencesEntity {
     }
 
     @Basic
-    @Column(name = "NEXT_VAL")
+    @Column(name = "NEXT_VAL", nullable = true, precision = 0)
     public Long getNextVal() {
         return nextVal;
     }

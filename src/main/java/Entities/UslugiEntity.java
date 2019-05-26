@@ -1,18 +1,28 @@
 package Entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "USLUGI", schema = "SZKOLAJAZDY", catalog = "")
 public class UslugiEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USLUGA_ID")
     private long uslugaId;
     private String nazwa;
-    private Long cena;
+    private long cena;
+    private Collection<RezerwacjeEntity> rezerwacjesByUslugaId;
 
     @Id
-    @Column(name = "USLUGA_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USLUGA_ID", nullable = false, precision = 0)
     public long getUslugaId() {
         return uslugaId;
+    }
+
+    public void setUslugaId(Long uslugaId) {
+        this.uslugaId = uslugaId;
     }
 
     public void setUslugaId(long uslugaId) {
@@ -20,7 +30,7 @@ public class UslugiEntity {
     }
 
     @Basic
-    @Column(name = "NAZWA")
+    @Column(name = "NAZWA", nullable = false, length = 20)
     public String getNazwa() {
         return nazwa;
     }
@@ -30,12 +40,12 @@ public class UslugiEntity {
     }
 
     @Basic
-    @Column(name = "CENA")
-    public Long getCena() {
+    @Column(name = "CENA", nullable = true, precision = 0)
+    public long getCena() {
         return cena;
     }
 
-    public void setCena(Long cena) {
+    public void setCena(long cena) {
         this.cena = cena;
     }
 
@@ -46,7 +56,6 @@ public class UslugiEntity {
         UslugiEntity that = (UslugiEntity) o;
         if (uslugaId != that.uslugaId) return false;
         if (nazwa != null ? !nazwa.equals(that.nazwa) : that.nazwa != null) return false;
-        if (cena != null ? !cena.equals(that.cena) : that.cena != null) return false;
         return true;
     }
 
@@ -54,7 +63,15 @@ public class UslugiEntity {
     public int hashCode() {
         int result = (int) (uslugaId ^ (uslugaId >>> 32));
         result = 31 * result + (nazwa != null ? nazwa.hashCode() : 0);
-        result = 31 * result + (cena != null ? cena.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "uslugiByUslugaId",orphanRemoval = true)
+    public Collection<RezerwacjeEntity> getRezerwacjesByUslugaId() {
+        return rezerwacjesByUslugaId;
+    }
+
+    public void setRezerwacjesByUslugaId(Collection<RezerwacjeEntity> rezerwacjesByUslugaId) {
+        this.rezerwacjesByUslugaId = rezerwacjesByUslugaId;
     }
 }

@@ -1,16 +1,18 @@
 package Controlers;
 
 import Entities.InstruktorzyEntity;
+import Entities.KursanciEntity;
 import Entities.RezerwacjeEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
-public class InstruktorzyControler {
+public class InstruktorzyControler implements Serializable {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Entities");
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
@@ -25,7 +27,7 @@ public class InstruktorzyControler {
         return byTime;
     }
     public InstruktorzyEntity getByID(long ID){
-        InstruktorzyEntity result = (InstruktorzyEntity) entityManager.createQuery("SELECT i FROM InstruktorzyEntity  i WHERE i.instruktorId=:a").setParameter("a",ID).getSingleResult();
+        InstruktorzyEntity result = entityManager.find(InstruktorzyEntity.class,ID);
         return result;
     }
     public InstruktorzyEntity login(String email, String haslo) {
@@ -50,4 +52,21 @@ public class InstruktorzyControler {
                 .setParameter("a",imie).setParameter("b",nazwisko).getSingleResult();
         return result;
     }
-}
+    public void update(InstruktorzyEntity re, long id){
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("UPDATE InstruktorzyEntity r SET r.imie=:a, r.nazwisko=:b,r.email=:c,r.haslo=:d where r.instruktorId=:e")
+                .setParameter("a",re.getImie()).setParameter("b",re.getNazwisko()).setParameter("c",re.getEmail()).setParameter("d",re.getHaslo()).setParameter("e",id).executeUpdate();
+        entityManager.getTransaction().commit();
+    }
+    public void deleteByID(long id) {
+        entityManager.getTransaction().begin();
+        InstruktorzyEntity ke = entityManager.find(InstruktorzyEntity.class, id);
+        entityManager.remove(ke);
+        entityManager.getTransaction().commit();
+    }
+    public void add(InstruktorzyEntity ie){
+        entityManager.getTransaction().begin();
+        entityManager.persist(ie);
+        entityManager.getTransaction().commit();
+    }
+    }

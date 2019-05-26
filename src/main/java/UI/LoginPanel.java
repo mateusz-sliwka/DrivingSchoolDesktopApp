@@ -18,7 +18,7 @@ class LoginPanel extends JPanel implements ActionListener {
     JTextField login = new JTextField(20);
     JLabel hasloLabel = new JLabel("Podaj haslo:");
     JTextField haslo = new JPasswordField(20);
-    String[] typy = {"Kursant","Instruktor"};
+    String[] typy = {"Kursant", "Instruktor"};
     JLabel typ = new JLabel("Wybierz typ konta:");
     JComboBox<String> typBox = new JComboBox<String>(typy);
     JLabel komunikat = new JLabel("<html><font color='red'>Podane dane logowania są nieprawidłowe.</html>");
@@ -49,31 +49,29 @@ class LoginPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if(source==register){
+        if (source == register) {
             new RegisterFrame();
         }
-        if(source==zaloguj){
-            if(typBox.getSelectedItem().toString()=="Kursant") {
+        if (source == zaloguj) {
+            if (typBox.getSelectedItem().toString() == "Kursant") {
                 KursanciEntity kursant = new KursanciControler().login(login.getText(), haslo.getText());
-                if(kursant==null){
-                   niezalogowano();
-                }
-                else {
+                if (kursant == null) {
+                    niezalogowano();
+                } else {
                     zalogowano();
                     new UserFrame(kursant);
                 }
-            }
-            else if(typBox.getSelectedItem().toString()=="Instruktor"){
-                InstruktorzyEntity instruktor = new InstruktorzyControler().login((login.getText()),haslo.getText());
-                if(instruktor==null)
+            } else if (typBox.getSelectedItem().toString() == "Instruktor") {
+                InstruktorzyEntity instruktor = new InstruktorzyControler().login((login.getText()), haslo.getText());
+                if (instruktor == null)
                     niezalogowano();
-                else{
+                else {
                     zalogowano();
-                    new LoggedInFrame(instruktor);}
+                    new LoggedInFrame(instruktor);
+                }
             }
 
-        }
-        else if (source == close) {
+        } else if (source == close) {
             int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz zamknąć program?", "Potwierdź zamykanie", JOptionPane.YES_NO_OPTION);
             if (decyzja == 0) {
                 Window win = SwingUtilities.getWindowAncestor(this);
@@ -81,11 +79,13 @@ class LoginPanel extends JPanel implements ActionListener {
             }
         }
     }
-    void zalogowano(){
-        Window win=SwingUtilities.getWindowAncestor(this);
+
+    void zalogowano() {
+        Window win = SwingUtilities.getWindowAncestor(this);
         ((Window) win).dispose();
     }
-    void niezalogowano(){
+
+    void niezalogowano() {
         komunikat.setVisible(true);
         haslo.setText("");
     }

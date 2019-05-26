@@ -33,16 +33,16 @@ class EditReservationPanel extends JPanel implements ActionListener {
     RezerwacjeEntity current;
 
 
-    EditReservationPanel(long ID,long flaga) {
+    EditReservationPanel(long ID, long flaga) {
         current = rc.getByID(ID);
         List<KursanciEntity> lista = kc.getAll();
-        for(int i=0;i<lista.size();i++)
-        kursantBox.addItem(lista.get(i).getImieNazwisko());
+        for (int i = 0; i < lista.size(); i++)
+            kursantBox.addItem(lista.get(i).getImieNazwisko());
         List<UslugiEntity> lista2 = uc.getAll();
-        for(int i=0;i<lista2.size();i++)
+        for (int i = 0; i < lista2.size(); i++)
             uslugaBox.addItem(lista2.get(i).getNazwa());
         List<InstruktorzyEntity> lista3 = ic.getAll();
-        for(int i=0;i<lista3.size();i++)
+        for (int i = 0; i < lista3.size(); i++)
             instruktorBox.addItem(lista3.get(i).getImieNazwisko());
         register.addActionListener(this);
         cancel.addActionListener(this);
@@ -53,7 +53,7 @@ class EditReservationPanel extends JPanel implements ActionListener {
         this.add(kursantBox);
         this.add(uslugaLabel);
         this.add(uslugaBox);
-        if(flaga==1) {
+        if (flaga == 1) {
             this.add(instruktorLabel);
             this.add(instruktorBox);
         }
@@ -70,14 +70,14 @@ class EditReservationPanel extends JPanel implements ActionListener {
             Window win = SwingUtilities.getWindowAncestor(this);
             ((Window) win).dispose();
         }
-        if(source==register){
+        if (source == register) {
             RezerwacjeEntity re = new RezerwacjeEntity();
-            re.setInstruktorId(ic.getByFS((String)instruktorBox.getSelectedItem()).getInstruktorId());
-            re.setKursantId(kc.getByFS((String)kursantBox.getSelectedItem()).getKursantId());
-            re.setUslugaId(uc.getByName((String)uslugaBox.getSelectedItem()).getUslugaId());
+            re.setInstruktorId(ic.getByFS((String) instruktorBox.getSelectedItem()).getInstruktorId());
+            re.setKursantId(kc.getByFS((String) kursantBox.getSelectedItem()).getKursantId());
+            re.setUslugaId(uc.getByName((String) uslugaBox.getSelectedItem()).getUslugaId());
             re.setDataDodania(new Date(System.currentTimeMillis()));
-            rc.update(re,current.getRezerwacjaId());
-            JOptionPane.showMessageDialog(this,"Rezerwacja zostala zaktualizowana");
+            rc.update(re, current.getRezerwacjaId());
+            JOptionPane.showMessageDialog(this, "Rezerwacja zostala zaktualizowana");
             Window win = SwingUtilities.getWindowAncestor(this);
             ((Window) win).dispose();
         }

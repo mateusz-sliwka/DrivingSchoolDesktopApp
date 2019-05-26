@@ -9,9 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
-class RegisterPanel extends JPanel implements ActionListener {
+class EditInstruktorPanel extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = 1;
     JLabel loginLabel = new JLabel("Podaj e-mail:");
@@ -22,18 +21,19 @@ class RegisterPanel extends JPanel implements ActionListener {
     JTextField imie = new JTextField(20);
     JLabel nazwiskoLabel = new JLabel("Podaj nazwisko:");
     JTextField nazwisko = new JTextField(20);
-    JLabel peselLabel = new JLabel("Podaj PESEL:");
-    JTextField pesel = new JTextField(20);
-    JLabel pkkLabel = new JLabel("Podaj PKK:");
-    JTextField pkk = new JTextField(20);
+
     JLabel komunikat = new JLabel("<html><font color='red'>Podaj wszystkie dane.</html>");
-    JButton register = new JButton("Zarejestruj");
+    JButton register = new JButton("Aktualizuj");
     JButton cancel = new JButton("Anuluj");
+    InstruktorzyEntity current;
+    InstruktorzyPanel kp;
 
-    RegisterPanel() {
-
+    EditInstruktorPanel(long ID, InstruktorzyPanel panel) {
+        kp=panel;
+        InstruktorzyControler ic = new InstruktorzyControler();
         register.addActionListener(this);
         cancel.addActionListener(this);
+        current=ic.getByID(ID);
         this.add(loginLabel);
         this.add(login);
         this.add(hasloLabel);
@@ -43,13 +43,14 @@ class RegisterPanel extends JPanel implements ActionListener {
         this.add(nazwiskoLabel);
         this.add(nazwisko);
 
-        this.add(peselLabel);
-        this.add(pesel);
-        this.add(pkkLabel);
-        this.add(pkk);
         this.add(register);
         this.add(cancel);
         this.add(komunikat);
+        imie.setText(current.getImie());
+        nazwisko.setText(current.getNazwisko());
+        login.setText(current.getEmail());
+        haslo.setText(current.getHaslo());
+
         komunikat.setVisible(false);
         this.setVisible(true);
     }
@@ -62,32 +63,17 @@ class RegisterPanel extends JPanel implements ActionListener {
             ((Window) win).dispose();
         }
         if (source == register) {
-            boolean mozna = true;
-            String[] napisy = {login.getText(), haslo.getText(), imie.getText(), nazwisko.getText(), pesel.getText(), pkk.getText()};
-            for (int i = 0; i < napisy.length; i++)
-                if (napisy[i].length() == 0 || napisy[i] == null || napisy[i] == "") {
-                    mozna = false;
-                    niezarejestrowano();
-                }
-            if (mozna == true)
-                zarejestrowano();
-
+            InstruktorzyControler ic = new InstruktorzyControler();
+            InstruktorzyEntity ie = new InstruktorzyEntity();
+            ie.setImie(imie.getText());
+            ie.setNazwisko(nazwisko.getText());
+            ie.setEmail(login.getText());
+            ie.setHaslo(haslo.getText());
+            ic.update(ie,current.getInstruktorId());
+            JOptionPane.showMessageDialog(this,"Zaktulizowano konto instruktora");
+            kp.refreshList();
+            Window win = SwingUtilities.getWindowAncestor(this);
+            ((Window) win).dispose();
         }
 
-    }
-
-    void zarejestrowano() {
-        Window win = SwingUtilities.getWindowAncestor(this);
-        ((Window) win).dispose();
-        KursanciControler kc = new KursanciControler();
-        boolean flaga = kc.add(imie.getText(), nazwisko.getText(), login.getText(), haslo.getText(), pkk.getText(), pesel.getText());
-        if (flaga == true) {
-            JOptionPane.showMessageDialog(this, "Konto zostało utworzone!");
-        } else
-            JOptionPane.showMessageDialog(this, "Wystapil blad. Sprobuj ponownie");
-    }
-
-    void niezarejestrowano() {
-        komunikat.setVisible(true);
-    }
-}
+    }}

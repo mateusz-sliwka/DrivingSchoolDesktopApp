@@ -1,15 +1,21 @@
 package Entities;
 
+import Controlers.KursanciControler;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 
 @Entity
 @Table(name = "KURSANCI", schema = "SZKOLAJAZDY", catalog = "")
-public class KursanciEntity {
+public class KursanciEntity implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @Column(name = "KURSANT_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long kursantId;
     private String imie;
     private String nazwisko;
@@ -18,10 +24,11 @@ public class KursanciEntity {
     private String pkk;
     private String haslo;
     private Date dataRejestracji;
+    private Collection<RezerwacjeEntity> rezerwacjesByKursantId;
 
     @Id
-    @Column(name = "KURSANT_ID")
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @Column(name = "KURSANT_ID", nullable = false, precision = 0)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long getKursantId() {
         return kursantId;
     }
@@ -31,17 +38,18 @@ public class KursanciEntity {
     }
 
     @Basic
-    @Column(name = "IMIE")
+    @Column(name = "IMIE", nullable = false, length = 20)
     public String getImie() {
         return imie;
     }
 
     public void setImie(String imie) {
+
         this.imie = imie;
     }
 
     @Basic
-    @Column(name = "NAZWISKO")
+    @Column(name = "NAZWISKO", nullable = false, length = 20)
     public String getNazwisko() {
         return nazwisko;
     }
@@ -51,7 +59,7 @@ public class KursanciEntity {
     }
 
     @Basic
-    @Column(name = "PESEL")
+    @Column(name = "PESEL", nullable = true, length = 20)
     public String getPesel() {
         return pesel;
     }
@@ -61,7 +69,7 @@ public class KursanciEntity {
     }
 
     @Basic
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", nullable = false, length = 20)
     public String getEmail() {
         return email;
     }
@@ -71,7 +79,7 @@ public class KursanciEntity {
     }
 
     @Basic
-    @Column(name = "PKK")
+    @Column(name = "PKK", nullable = true, length = 20)
     public String getPkk() {
         return pkk;
     }
@@ -81,7 +89,7 @@ public class KursanciEntity {
     }
 
     @Basic
-    @Column(name = "HASLO")
+    @Column(name = "HASLO", nullable = false, length = 20)
     public String getHaslo() {
         return haslo;
     }
@@ -91,7 +99,7 @@ public class KursanciEntity {
     }
 
     @Basic
-    @Column(name = "DATA_REJESTRACJI")
+    @Column(name = "DATA_REJESTRACJI", nullable = true)
     public Date getDataRejestracji() {
         return dataRejestracji;
     }
@@ -129,8 +137,18 @@ public class KursanciEntity {
         result = 31 * result + (dataRejestracji != null ? dataRejestracji.hashCode() : 0);
         return result;
     }
+
     @Transient
-    public String getImieNazwisko(){
-        return this.imie+" "+this.nazwisko;
+    public String getImieNazwisko() {
+        return this.imie + " " + this.nazwisko;
+    }
+
+    @OneToMany(mappedBy = "kursanciByKursantId",orphanRemoval=true)
+    public Collection<RezerwacjeEntity> getRezerwacjesByKursantId() {
+        return rezerwacjesByKursantId;
+    }
+
+    public void setRezerwacjesByKursantId(Collection<RezerwacjeEntity> rezerwacjesByKursantId) {
+        this.rezerwacjesByKursantId = rezerwacjesByKursantId;
     }
 }

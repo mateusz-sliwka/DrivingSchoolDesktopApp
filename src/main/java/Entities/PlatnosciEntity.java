@@ -6,23 +6,28 @@ import java.sql.Time;
 @Entity
 @Table(name = "PLATNOSCI", schema = "SZKOLAJAZDY", catalog = "")
 public class PlatnosciEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "PLATNOSC_ID")
     private long platnoscId;
     private Long kwota;
     private Time dataPlatnosci;
+    private RezerwacjeEntity rezerwacjeByRezerwacjaId;
 
     @Basic
     @Id
-    @Column(name = "PLATNOSC_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "PLATNOSC_ID", nullable = false, precision = 0)
     public long getPlatnoscId() {
         return platnoscId;
     }
-
     public void setPlatnoscId(long platnoscId) {
         this.platnoscId = platnoscId;
     }
 
     @Basic
-    @Column(name = "KWOTA")
+    @Column(name = "KWOTA", nullable = true, precision = 0)
     public Long getKwota() {
         return kwota;
     }
@@ -32,7 +37,7 @@ public class PlatnosciEntity {
     }
 
     @Basic
-    @Column(name = "DATA_PLATNOSCI")
+    @Column(name = "DATA_PLATNOSCI", nullable = true)
     public Time getDataPlatnosci() {
         return dataPlatnosci;
     }
@@ -59,5 +64,15 @@ public class PlatnosciEntity {
         result = 31 * result + (kwota != null ? kwota.hashCode() : 0);
         result = 31 * result + (dataPlatnosci != null ? dataPlatnosci.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "REZERWACJA_ID", referencedColumnName = "REZERWACJA_ID", nullable = false)
+    public RezerwacjeEntity getRezerwacjeByRezerwacjaId() {
+        return rezerwacjeByRezerwacjaId;
+    }
+
+    public void setRezerwacjeByRezerwacjaId(RezerwacjeEntity rezerwacjeByRezerwacjaId) {
+        this.rezerwacjeByRezerwacjaId = rezerwacjeByRezerwacjaId;
     }
 }

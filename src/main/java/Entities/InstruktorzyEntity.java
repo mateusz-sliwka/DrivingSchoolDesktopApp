@@ -1,15 +1,17 @@
 package Entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 @Entity
 @Table(name = "INSTRUKTORZY", schema = "SZKOLAJAZDY", catalog = "")
-public class InstruktorzyEntity {
+public class InstruktorzyEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long instruktorId;
     private String imie;
     private String nazwisko;
@@ -19,10 +21,12 @@ public class InstruktorzyEntity {
     private String email;
     private String haslo;
     private long czyAdmin;
+    private Collection<KategorieInstruktorowEntity> kategorieInstruktorowsByInstruktorId;
+    private Collection<RezerwacjeEntity> rezerwacjesByInstruktorId;
 
     @Id
-    @Column(name = "INSTRUKTOR_ID")
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @Column(name = "INSTRUKTOR_ID", nullable = false, precision = 0)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long getInstruktorId() {
         return instruktorId;
     }
@@ -32,7 +36,7 @@ public class InstruktorzyEntity {
     }
 
     @Basic
-    @Column(name = "IMIE")
+    @Column(name = "IMIE", nullable = false, length = 20)
     public String getImie() {
         return imie;
     }
@@ -42,7 +46,7 @@ public class InstruktorzyEntity {
     }
 
     @Basic
-    @Column(name = "NAZWISKO")
+    @Column(name = "NAZWISKO", nullable = false, length = 20)
     public String getNazwisko() {
         return nazwisko;
     }
@@ -52,7 +56,7 @@ public class InstruktorzyEntity {
     }
 
     @Basic
-    @Column(name = "GODZ_ROZPOCZECIA")
+    @Column(name = "GODZ_ROZPOCZECIA", nullable = false, length = 20)
     public String getGodzRozpoczecia() {
         return godzRozpoczecia;
     }
@@ -62,7 +66,7 @@ public class InstruktorzyEntity {
     }
 
     @Basic
-    @Column(name = "GODZ_ZAKONCZENIA")
+    @Column(name = "GODZ_ZAKONCZENIA", nullable = true, length = 20)
     public String getGodzZakonczenia() {
         return godzZakonczenia;
     }
@@ -72,7 +76,7 @@ public class InstruktorzyEntity {
     }
 
     @Basic
-    @Column(name = "DATA_DODANIA")
+    @Column(name = "DATA_DODANIA", nullable = true)
     public Date getDataDodania() {
         return dataDodania;
     }
@@ -109,7 +113,7 @@ public class InstruktorzyEntity {
     }
 
     @Basic
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", nullable = false, length = 20)
     public String getEmail() {
         return email;
     }
@@ -119,7 +123,7 @@ public class InstruktorzyEntity {
     }
 
     @Basic
-    @Column(name = "HASLO")
+    @Column(name = "HASLO", nullable = false, length = 20)
     public String getHaslo() {
         return haslo;
     }
@@ -129,7 +133,7 @@ public class InstruktorzyEntity {
     }
 
     @Basic
-    @Column(name = "CZY_ADMIN")
+    @Column(name = "CZY_ADMIN", nullable = false, precision = 0)
     public long getCzyAdmin() {
         return czyAdmin;
     }
@@ -138,7 +142,25 @@ public class InstruktorzyEntity {
     }
 
     @Transient
-    public String getImieNazwisko(){
-        return this.imie+" "+this.nazwisko;
+    public String getImieNazwisko() {
+        return this.imie + " " + this.nazwisko;
+    }
+
+    @OneToMany(mappedBy = "instruktorzyByKategoriaId",orphanRemoval=true)
+    public Collection<KategorieInstruktorowEntity> getKategorieInstruktorowsByInstruktorId() {
+        return kategorieInstruktorowsByInstruktorId;
+    }
+
+    public void setKategorieInstruktorowsByInstruktorId(Collection<KategorieInstruktorowEntity> kategorieInstruktorowsByInstruktorId) {
+        this.kategorieInstruktorowsByInstruktorId = kategorieInstruktorowsByInstruktorId;
+    }
+
+    @OneToMany(mappedBy = "instruktorzyByInstruktorId",orphanRemoval=true)
+    public Collection<RezerwacjeEntity> getRezerwacjesByInstruktorId() {
+        return rezerwacjesByInstruktorId;
+    }
+
+    public void setRezerwacjesByInstruktorId(Collection<RezerwacjeEntity> rezerwacjesByInstruktorId) {
+        this.rezerwacjesByInstruktorId = rezerwacjesByInstruktorId;
     }
 }

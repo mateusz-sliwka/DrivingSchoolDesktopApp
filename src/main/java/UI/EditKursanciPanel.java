@@ -1,17 +1,15 @@
 package UI;
 
-import Controlers.InstruktorzyControler;
 import Controlers.KursanciControler;
-import Entities.InstruktorzyEntity;
 import Entities.KursanciEntity;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
-class RegisterPanel extends JPanel implements ActionListener {
+class EditKursanciPanel extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = 1;
     JLabel loginLabel = new JLabel("Podaj e-mail:");
@@ -27,13 +25,17 @@ class RegisterPanel extends JPanel implements ActionListener {
     JLabel pkkLabel = new JLabel("Podaj PKK:");
     JTextField pkk = new JTextField(20);
     JLabel komunikat = new JLabel("<html><font color='red'>Podaj wszystkie dane.</html>");
-    JButton register = new JButton("Zarejestruj");
+    JButton register = new JButton("Aktualizuj");
     JButton cancel = new JButton("Anuluj");
+    KursanciEntity current;
+    KursanciPanel kp;
 
-    RegisterPanel() {
-
+    EditKursanciPanel(long ID, KursanciPanel panel) {
+        kp=panel;
+        KursanciControler kc = new KursanciControler();
         register.addActionListener(this);
         cancel.addActionListener(this);
+        current=kc.getByID(ID);
         this.add(loginLabel);
         this.add(login);
         this.add(hasloLabel);
@@ -42,7 +44,6 @@ class RegisterPanel extends JPanel implements ActionListener {
         this.add(imie);
         this.add(nazwiskoLabel);
         this.add(nazwisko);
-
         this.add(peselLabel);
         this.add(pesel);
         this.add(pkkLabel);
@@ -50,6 +51,12 @@ class RegisterPanel extends JPanel implements ActionListener {
         this.add(register);
         this.add(cancel);
         this.add(komunikat);
+        imie.setText(current.getImie());
+        nazwisko.setText(current.getNazwisko());
+        login.setText(current.getEmail());
+        haslo.setText(current.getHaslo());
+        pesel.setText(current.getPesel());
+        pkk.setText(current.getPkk());
         komunikat.setVisible(false);
         this.setVisible(true);
     }
@@ -62,16 +69,19 @@ class RegisterPanel extends JPanel implements ActionListener {
             ((Window) win).dispose();
         }
         if (source == register) {
-            boolean mozna = true;
-            String[] napisy = {login.getText(), haslo.getText(), imie.getText(), nazwisko.getText(), pesel.getText(), pkk.getText()};
-            for (int i = 0; i < napisy.length; i++)
-                if (napisy[i].length() == 0 || napisy[i] == null || napisy[i] == "") {
-                    mozna = false;
-                    niezarejestrowano();
-                }
-            if (mozna == true)
-                zarejestrowano();
-
+            KursanciControler kc = new KursanciControler();
+            KursanciEntity ke = new KursanciEntity();
+            ke.setImie(imie.getText());
+            ke.setNazwisko(nazwisko.getText());
+            ke.setEmail(login.getText());
+            ke.setHaslo(haslo.getText());
+            ke.setPesel(pesel.getText());
+            ke.setPkk(pkk.getText());
+            kc.update(ke,current.getKursantId());
+            JOptionPane.showMessageDialog(this,"Zaktulizowano konto kursanta");
+            kp.refreshList();
+            Window win = SwingUtilities.getWindowAncestor(this);
+            ((Window) win).dispose();
         }
 
     }

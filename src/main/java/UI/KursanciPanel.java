@@ -5,6 +5,7 @@ import Controlers.KursanciControler;
 import Controlers.RezerwacjeControler;
 import Controlers.UslugiControler;
 import Entities.InstruktorzyEntity;
+import Entities.KursanciEntity;
 import Entities.RezerwacjeEntity;
 
 import javax.swing.*;
@@ -18,35 +19,44 @@ class KursanciPanel extends JPanel implements ActionListener {
     private static final long serialVersionUID = 1;
     private InstruktorzyEntity current;
     JLabel login = new JLabel();
-    JButton logout = new JButton("Wyloguj się");
-    JButton close = new JButton("Zamknij program");
     JMenuBar pasek = new JMenuBar();
     JButton refresh = new JButton("Refresh");
     JButton delete = new JButton("Usuń pozycję");
     JButton edit = new JButton("Edytuj pozycje");
-    String[] kolumny = {"ID", "Usługa", "Kursant", "Instruktor", "Data dodania"};
-    JTable rezerwacjeTable = new JTable();
-    JButton add = new JButton("Dodaj rezerwacje");
+    String[] kolumny = {"ID", "Imie", "Nazwisko", "Email", "Pesel", "PKK","Saldo"};
+    JTable kursanciTable = new JTable();
+    JButton add = new JButton("Dodaj kursanta");
     DefaultTableModel model = new DefaultTableModel(kolumny, 0);
-    JScrollPane pane = new JScrollPane(rezerwacjeTable);
+    JScrollPane pane = new JScrollPane(kursanciTable);
     InstruktorzyControler ic = new InstruktorzyControler();
     RezerwacjeControler rc = new RezerwacjeControler();
     KursanciControler kc = new KursanciControler();
     UslugiControler uc = new UslugiControler();
 
     public void refreshList() {
-
+        model.setRowCount(0);
+        RezerwacjeControler rc2 = new RezerwacjeControler();
+        kc = new KursanciControler();
+        List<KursanciEntity> kursanci;
+        if (current.getCzyAdmin() == 1)
+            kursanci = kc.getAll();
+        else
+            kursanci = rc2.getByInstruktor(current.getInstruktorId());
+        for (int i = 0; i < kursanci.size(); i++) {
+            String[] zawartosc = {Integer.toString((int) kursanci.get(i).getKursantId()),
+                    kursanci.get(i).getImie(), kursanci.get(i).getNazwisko(), kursanci.get(i).getEmail(), kursanci.get(i).getPesel(),
+                    kursanci.get(i).getPkk(),String.valueOf(kc.getSaldo(kursanci.get(i)))};
+            model.addRow(zawartosc);
+        }
     }
 
     KursanciPanel(InstruktorzyEntity current) {
         edit.addActionListener(this);
-        logout.addActionListener(this);
-        close.addActionListener(this);
         add.addActionListener(this);
         refresh.addActionListener(this);
-        rezerwacjeTable.setFillsViewportHeight(true);
-        rezerwacjeTable.setModel(model);
-        rezerwacjeTable.setAutoCreateRowSorter(true);
+        kursanciTable.setFillsViewportHeight(true);
+        kursanciTable.setModel(model);
+        kursanciTable.setAutoCreateRowSorter(true);
         System.out.println(current.getImie());
         login.setText("Zarządzanie kursantami");
         delete.addActionListener(this);
@@ -57,10 +67,7 @@ class KursanciPanel extends JPanel implements ActionListener {
         this.add(add);
         this.add(edit);
         this.add(delete);
-        this.add(logout);
-        this.add(close);
-        if(current.getCzyAdmin()==0)
-        {
+        if (current.getCzyAdmin() == 0) {
             delete.setVisible(false);
         }
         refreshList();
@@ -73,31 +80,18 @@ class KursanciPanel extends JPanel implements ActionListener {
         if (source == refresh) {
             refreshList();
         }
-        if (source == logout) {
-            int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz się wylogowac?", "Potwierdź wylogowanie", JOptionPane.YES_NO_OPTION);
-            if (decyzja == 0) {
-                new LoginFrame();
-                Window win = SwingUtilities.getWindowAncestor(this);
-                ((Window) win).dispose();
-            }
-        } else if (source == close) {
-            int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz zamknąć program?", "Potwierdź zamykanie", JOptionPane.YES_NO_OPTION);
-            if (decyzja == 0) {
-                Window win = SwingUtilities.getWindowAncestor(this);
-                ((Window) win).dispose();
-            }
-        }
         if (source == delete) {
-            long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            rc.deleteByID(ID);
+            long ID = Integer.parseInt((String) kursanciTable.getValueAt(kursanciTable.getSelectedRow(), 0));
+            kc.deleteByID(ID);
             refreshList();
         }
         if (source == edit) {
-            long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            new EditReservationFrame(ID,current.getCzyAdmin());
+            long ID = Integer.parseInt((String) kursanciTable.getValueAt(kursanciTable.getSelectedRow(), 0));
+            new EditKursanciFrame(ID,this);
         }
         if (source == add) {
-            new AddReservationFrame(current.getCzyAdmin());
+            new RegisterFrame();
+            refreshList();
         }
     }
 

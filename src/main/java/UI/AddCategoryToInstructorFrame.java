@@ -3,13 +3,14 @@ package UI;
 import javax.swing.*;
 import java.awt.*;
 
-public class EditReservationFrame extends JFrame {
+public class AddCategoryToInstructorFrame extends JFrame {
     private static final long serialVersionUID = 1L;
+    AddCategoryToInstructorPanel panel;
 
+    public AddCategoryToInstructorFrame(long ID,InstruktorzyPanel panel2) {
 
-    public EditReservationFrame(long ID, long flaga) {
-        super("Edycja rezerwacji");
-        EditReservationPanel panel = new EditReservationPanel(ID, flaga);
+        super("Nowe konto kursanta");
+        panel = new AddCategoryToInstructorPanel(ID, panel2);
         this.setSize(new Dimension(280, 400));
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panel);

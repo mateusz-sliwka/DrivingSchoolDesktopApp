@@ -10,12 +10,14 @@
         <class>Entities.PlatnosciEntity</class>
         <class>Entities.RezerwacjeEntity</class>
         <class>Entities.UslugiEntity</class>
+        <class>Entities.HibernateSequencesEntity</class>
         <properties>
+            <property name="hibernate.default_schema" value="szkolajazdy" />
             <property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
             <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
             <property name="hibernate.connection.username" value="szkolajazdy"/>
             <property name="hibernate.connection.password" value="admin"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle12cDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

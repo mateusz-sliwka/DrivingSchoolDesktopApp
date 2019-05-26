@@ -13,6 +13,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.WindowListener;
 import java.sql.ResultSet;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -22,8 +23,6 @@ class ReservationPanel extends JPanel implements ActionListener {
     private static final long serialVersionUID = 1;
     private InstruktorzyEntity current;
     JLabel login = new JLabel();
-    JButton logout = new JButton("Wyloguj się");
-    JButton close = new JButton("Zamknij program");
     JMenuBar pasek = new JMenuBar();
     JButton refresh = new JButton("Refresh");
     JButton delete = new JButton("Usuń pozycję");
@@ -42,22 +41,28 @@ class ReservationPanel extends JPanel implements ActionListener {
     public void refreshList() {
         model.setRowCount(0);
         RezerwacjeControler rc2 = new RezerwacjeControler();
+        uc = new UslugiControler();
+        ic = new InstruktorzyControler();
+        kc = new KursanciControler();
         List<RezerwacjeEntity> rezerwacje;
-        if(current.getCzyAdmin()==1)
-            rezerwacje= rc2.getAll();
+        if (current.getCzyAdmin() == 1)
+            rezerwacje = rc2.getAll();
         else
             rezerwacje = rc2.getByInstruktor(current.getInstruktorId());
         for (int i = 0; i < rezerwacje.size(); i++) {
             System.out.println(rezerwacje.get(i).getInstruktorId());
-            String[] zawartosc = {Integer.toString((int) rezerwacje.get(i).getRezerwacjaId()), uc.getByID(rezerwacje.get(i).getUslugaId().intValue()).getNazwa(), kc.getByID(rezerwacje.get(i).getKursantId()).getImieNazwisko(), ic.getByID(rezerwacje.get(i).getInstruktorId()).getImieNazwisko(), (rezerwacje.get(i).getDataDodania().toString())};
+            String[] zawartosc = {Integer.toString((int) rezerwacje.get(i).getRezerwacjaId()),
+                    rezerwacje.get(i).getUslugiByUslugaId().getNazwa(),
+                    rezerwacje.get(i).getKursanciByKursantId().getImieNazwisko(),
+                   rezerwacje.get(i).getInstruktorzyByInstruktorId().getImieNazwisko(),
+                    (rezerwacje.get(i).getDataDodania().toString())};
             model.addRow(zawartosc);
         }
     }
 
     ReservationPanel(InstruktorzyEntity current) {
         edit.addActionListener(this);
-        logout.addActionListener(this);
-        close.addActionListener(this);
+
         add.addActionListener(this);
         refresh.addActionListener(this);
         rezerwacjeTable.setFillsViewportHeight(true);
@@ -74,10 +79,8 @@ class ReservationPanel extends JPanel implements ActionListener {
         this.add(add);
         this.add(edit);
         this.add(delete);
-        this.add(logout);
-        this.add(close);
-        if(current.getCzyAdmin()==0)
-        {
+
+        if (current.getCzyAdmin() == 0) {
             delete.setVisible(false);
         }
         refreshList();
@@ -90,20 +93,6 @@ class ReservationPanel extends JPanel implements ActionListener {
         if (source == refresh) {
             refreshList();
         }
-        if (source == logout) {
-            int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz się wylogowac?", "Potwierdź wylogowanie", JOptionPane.YES_NO_OPTION);
-            if (decyzja == 0) {
-                new LoginFrame();
-                Window win = SwingUtilities.getWindowAncestor(this);
-                ((Window) win).dispose();
-            }
-        } else if (source == close) {
-            int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz zamknąć program?", "Potwierdź zamykanie", JOptionPane.YES_NO_OPTION);
-            if (decyzja == 0) {
-                Window win = SwingUtilities.getWindowAncestor(this);
-                ((Window) win).dispose();
-            }
-        }
         if (source == delete) {
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
             rc.deleteByID(ID);
@@ -111,10 +100,10 @@ class ReservationPanel extends JPanel implements ActionListener {
         }
         if (source == edit) {
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            new EditReservationFrame(ID,current.getCzyAdmin());
+            new EditReservationFrame(ID, current.getCzyAdmin());
         }
         if (source == add) {
-            new AddReservationFrame(current.getCzyAdmin());
+            new AddReservationFrame(current.getCzyAdmin(), this);
         }
     }
 

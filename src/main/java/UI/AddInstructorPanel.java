@@ -3,7 +3,6 @@ package UI;
 import Controlers.InstruktorzyControler;
 import Controlers.KursanciControler;
 import Entities.InstruktorzyEntity;
-import Entities.KursanciEntity;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,31 +10,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 
-class RegisterPanel extends JPanel implements ActionListener {
+class AddInstructorPanel extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = 1;
-    JLabel loginLabel = new JLabel("Podaj e-mail:");
-    JTextField login = new JTextField(20);
+    JLabel mailLabel = new JLabel("Podaj e-mail:");
+    JTextField mail = new JTextField(20);
     JLabel hasloLabel = new JLabel("Podaj haslo:");
     JTextField haslo = new JPasswordField(20);
     JLabel imieLabel = new JLabel("Podaj imię:");
     JTextField imie = new JTextField(20);
     JLabel nazwiskoLabel = new JLabel("Podaj nazwisko:");
     JTextField nazwisko = new JTextField(20);
-    JLabel peselLabel = new JLabel("Podaj PESEL:");
-    JTextField pesel = new JTextField(20);
-    JLabel pkkLabel = new JLabel("Podaj PKK:");
-    JTextField pkk = new JTextField(20);
+    JLabel grLabel = new JLabel("Podaj godz rozpoczecia:");
+    JTextField gr = new JTextField(20);
+    JLabel gzLabel = new JLabel("Podaj godz zakonczenia:");
+    JTextField gz = new JTextField(20);
     JLabel komunikat = new JLabel("<html><font color='red'>Podaj wszystkie dane.</html>");
     JButton register = new JButton("Zarejestruj");
     JButton cancel = new JButton("Anuluj");
+    InstruktorzyPanel panel;
 
-    RegisterPanel() {
-
+    AddInstructorPanel(InstruktorzyPanel panel) {
+this.panel=panel;
         register.addActionListener(this);
         cancel.addActionListener(this);
-        this.add(loginLabel);
-        this.add(login);
+        this.add(mailLabel);
+        this.add(mail);
         this.add(hasloLabel);
         this.add(haslo);
         this.add(imieLabel);
@@ -43,10 +43,10 @@ class RegisterPanel extends JPanel implements ActionListener {
         this.add(nazwiskoLabel);
         this.add(nazwisko);
 
-        this.add(peselLabel);
-        this.add(pesel);
-        this.add(pkkLabel);
-        this.add(pkk);
+        this.add(grLabel);
+        this.add(gr);
+        this.add(gzLabel);
+        this.add(gz);
         this.add(register);
         this.add(cancel);
         this.add(komunikat);
@@ -63,7 +63,7 @@ class RegisterPanel extends JPanel implements ActionListener {
         }
         if (source == register) {
             boolean mozna = true;
-            String[] napisy = {login.getText(), haslo.getText(), imie.getText(), nazwisko.getText(), pesel.getText(), pkk.getText()};
+            String[] napisy = {mail.getText(), haslo.getText(), imie.getText(), nazwisko.getText(), gr.getText(), gz.getText()};
             for (int i = 0; i < napisy.length; i++)
                 if (napisy[i].length() == 0 || napisy[i] == null || napisy[i] == "") {
                     mozna = false;
@@ -77,14 +77,23 @@ class RegisterPanel extends JPanel implements ActionListener {
     }
 
     void zarejestrowano() {
+
+       InstruktorzyControler ic = new InstruktorzyControler();
+        InstruktorzyEntity ie = new InstruktorzyEntity();
+        ie.setImie(imie.getText());
+        ie.setNazwisko(nazwisko.getText());
+        ie.setEmail(mail.getText());
+        ie.setHaslo(haslo.getText());
+        ie.setGodzRozpoczecia(gr.getText());
+        ie.setGodzZakonczenia(gz.getText());
+        ie.setCzyAdmin(0);
+        ie.setDataDodania(new Date(System.currentTimeMillis()));
+        ic.add(ie);
+            JOptionPane.showMessageDialog(this, "Konto zostało utworzone!");
         Window win = SwingUtilities.getWindowAncestor(this);
         ((Window) win).dispose();
-        KursanciControler kc = new KursanciControler();
-        boolean flaga = kc.add(imie.getText(), nazwisko.getText(), login.getText(), haslo.getText(), pkk.getText(), pesel.getText());
-        if (flaga == true) {
-            JOptionPane.showMessageDialog(this, "Konto zostało utworzone!");
-        } else
-            JOptionPane.showMessageDialog(this, "Wystapil blad. Sprobuj ponownie");
+            panel.refreshList();
+
     }
 
     void niezarejestrowano() {

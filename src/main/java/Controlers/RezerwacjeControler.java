@@ -37,7 +37,7 @@ public class RezerwacjeControler {
         entityManager.getTransaction().commit();
     }
     public RezerwacjeEntity getByID(long id){
-        RezerwacjeEntity re = (RezerwacjeEntity) entityManager.createQuery("Select r FROM RezerwacjeEntity r WHERE r.rezerwacjaId=:a").setParameter("a",id).getSingleResult();
+        RezerwacjeEntity re = entityManager.find(RezerwacjeEntity.class,id);
         return re;
     }
     public void add(RezerwacjeEntity re) {

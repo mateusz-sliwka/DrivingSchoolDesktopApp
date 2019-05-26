@@ -1,15 +1,21 @@
 package Entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "KATEGORIE", schema = "SZKOLAJAZDY", catalog = "")
 public class KategorieEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "KATEGORIA_ID")
     private long kategoriaId;
     private String symbol;
+    private Collection<KategorieInstruktorowEntity> kategorieInstruktorowsByKategoriaId;
 
     @Id
-    @Column(name = "KATEGORIA_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "KATEGORIA_ID", nullable = false, precision = 0)
     public long getKategoriaId() {
         return kategoriaId;
     }
@@ -19,7 +25,7 @@ public class KategorieEntity {
     }
 
     @Basic
-    @Column(name = "SYMBOL")
+    @Column(name = "SYMBOL", nullable = true, length = 5)
     public String getSymbol() {
         return symbol;
     }
@@ -43,5 +49,14 @@ public class KategorieEntity {
         int result = (int) (kategoriaId ^ (kategoriaId >>> 32));
         result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "kategorieByKategoriaId")
+    public Collection<KategorieInstruktorowEntity> getKategorieInstruktorowsByKategoriaId() {
+        return kategorieInstruktorowsByKategoriaId;
+    }
+
+    public void setKategorieInstruktorowsByKategoriaId(Collection<KategorieInstruktorowEntity> kategorieInstruktorowsByKategoriaId) {
+        this.kategorieInstruktorowsByKategoriaId = kategorieInstruktorowsByKategoriaId;
     }
 }
