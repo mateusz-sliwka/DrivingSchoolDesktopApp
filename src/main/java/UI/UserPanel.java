@@ -15,7 +15,7 @@ class UserPanel extends JPanel implements ActionListener {
 
     UserPanel(KursanciEntity current) {
         this.current = current;
-
+//TODO: TUTAJ JEST PANEL POWITALNY USERA
         login.setText("Witaj: " + current.getImie() + " " + current.getNazwisko());
         this.add(login);
 

@@ -8,7 +8,7 @@ import java.awt.*;
 public class UserFrame extends JFrame {
     private static final long serialVersionUID = 1L;
     KursanciEntity current;
-
+//TODO: TO RAMKA KTORA WIDZI USER PO ZALOGOWANIU
     public UserFrame(KursanciEntity current) {
         super("Panel kursanta");
         this.current = current;
