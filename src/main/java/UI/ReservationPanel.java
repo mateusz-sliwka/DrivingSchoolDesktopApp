@@ -8,13 +8,13 @@ import Entities.InstruktorzyEntity;
 import Entities.RezerwacjeEntity;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import java.awt.*;
-import java.awt.event.WindowListener;
-import java.sql.ResultSet;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +27,7 @@ class ReservationPanel extends JPanel implements ActionListener {
     JButton refresh = new JButton("Refresh");
     JButton delete = new JButton("Usuń pozycję");
     JButton edit = new JButton("Edytuj pozycje");
+    JButton plik = new JButton("Generuj plik");
     JMenuItem menu = new JMenuItem("Zarządzaj rezerwacjami");
     String[] kolumny = {"ID", "Usługa", "Kursant", "Instruktor", "Data dodania"};
     JTable rezerwacjeTable = new JTable();
@@ -54,7 +55,7 @@ class ReservationPanel extends JPanel implements ActionListener {
             String[] zawartosc = {Integer.toString((int) rezerwacje.get(i).getRezerwacjaId()),
                     rezerwacje.get(i).getUslugiByUslugaId().getNazwa(),
                     rezerwacje.get(i).getKursanciByKursantId().getImieNazwisko(),
-                   rezerwacje.get(i).getInstruktorzyByInstruktorId().getImieNazwisko(),
+                    rezerwacje.get(i).getInstruktorzyByInstruktorId().getImieNazwisko(),
                     (rezerwacje.get(i).getDataDodania().toString())};
             model.addRow(zawartosc);
         }
@@ -62,7 +63,7 @@ class ReservationPanel extends JPanel implements ActionListener {
 
     ReservationPanel(InstruktorzyEntity current) {
         edit.addActionListener(this);
-
+        plik.addActionListener(this);
         add.addActionListener(this);
         refresh.addActionListener(this);
         rezerwacjeTable.setFillsViewportHeight(true);
@@ -79,6 +80,7 @@ class ReservationPanel extends JPanel implements ActionListener {
         this.add(add);
         this.add(edit);
         this.add(delete);
+        this.add(plik);
 
         if (current.getCzyAdmin() == 0) {
             delete.setVisible(false);
@@ -92,6 +94,37 @@ class ReservationPanel extends JPanel implements ActionListener {
         Object source = e.getSource();
         if (source == refresh) {
             refreshList();
+        }
+        if (source == plik) {
+
+            try {
+                String nazwa = JOptionPane.showInputDialog("Podaj nazwe pliku: ");
+                String data1 = JOptionPane.showInputDialog("Od jakiej daty (yyyy-mm-dd)");
+                String data2 = JOptionPane.showInputDialog("Do jakiej daty (yyyy-mm-dd)");
+                Date date1 = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(data1).getTime());
+                Date date2 = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(data2).getTime());
+                System.out.println(date1);
+                System.out.println(date2);
+                RezerwacjeControler rc = new RezerwacjeControler();
+                List<RezerwacjeEntity> rezerwacje = rc.getByInstruktor(current.getInstruktorId());
+                FileWriter fw = new FileWriter(new File(nazwa + ".txt"));
+                fw.write("Raport dla instruktora " + current.getImieNazwisko() + " za okres od " + date1.toString() + " do " + date2.toString()
+                        + "\nZrealizowane zajęcia: " + String.valueOf(rezerwacje.size())
+                        + "\nRezerwacje: ");
+                for (RezerwacjeEntity re : rezerwacje) {
+                    if (re.getDataDodania().compareTo(date1) >= 0 & re.getDataDodania().compareTo(date2) <= 0)
+                        fw.write(re.doRaportu());
+                    System.out.println(date1);
+                    System.out.println(date2);
+                    System.out.println(re.getDataDodania());
+                }
+                fw.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+
         }
         if (source == delete) {
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));

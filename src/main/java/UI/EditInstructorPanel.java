@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class EditInstruktorPanel extends JPanel implements ActionListener {
+class EditInstructorPanel extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = 1;
     JLabel loginLabel = new JLabel("Podaj e-mail:");
@@ -28,12 +28,12 @@ class EditInstruktorPanel extends JPanel implements ActionListener {
     InstruktorzyEntity current;
     InstruktorzyPanel kp;
 
-    EditInstruktorPanel(long ID, InstruktorzyPanel panel) {
-        kp=panel;
+    EditInstructorPanel(long ID, InstruktorzyPanel panel) {
+        kp = panel;
         InstruktorzyControler ic = new InstruktorzyControler();
         register.addActionListener(this);
         cancel.addActionListener(this);
-        current=ic.getByID(ID);
+        current = ic.getByID(ID);
         this.add(loginLabel);
         this.add(login);
         this.add(hasloLabel);
@@ -69,11 +69,12 @@ class EditInstruktorPanel extends JPanel implements ActionListener {
             ie.setNazwisko(nazwisko.getText());
             ie.setEmail(login.getText());
             ie.setHaslo(haslo.getText());
-            ic.update(ie,current.getInstruktorId());
-            JOptionPane.showMessageDialog(this,"Zaktulizowano konto instruktora");
+            ic.update(ie, current.getInstruktorId());
+            JOptionPane.showMessageDialog(this, "Zaktulizowano konto instruktora");
             kp.refreshList();
             Window win = SwingUtilities.getWindowAncestor(this);
             ((Window) win).dispose();
         }
 
-    }}
+    }
+}

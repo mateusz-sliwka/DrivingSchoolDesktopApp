@@ -25,6 +25,7 @@ public class KursanciEntity implements Serializable {
     private String haslo;
     private Date dataRejestracji;
     private Collection<RezerwacjeEntity> rezerwacjesByKursantId;
+    private Collection<PlatnosciEntity> platnoscisByKursantId;
 
     @Id
     @Column(name = "KURSANT_ID", nullable = false, precision = 0)
@@ -143,12 +144,21 @@ public class KursanciEntity implements Serializable {
         return this.imie + " " + this.nazwisko;
     }
 
-    @OneToMany(mappedBy = "kursanciByKursantId",orphanRemoval=true)
+    @OneToMany(mappedBy = "kursanciByKursantId", orphanRemoval = true)
     public Collection<RezerwacjeEntity> getRezerwacjesByKursantId() {
         return rezerwacjesByKursantId;
     }
 
     public void setRezerwacjesByKursantId(Collection<RezerwacjeEntity> rezerwacjesByKursantId) {
         this.rezerwacjesByKursantId = rezerwacjesByKursantId;
+    }
+
+    @OneToMany(mappedBy = "kursanciByKursantId", orphanRemoval = true)
+    public Collection<PlatnosciEntity> getPlatnoscisByKursantId() {
+        return platnoscisByKursantId;
+    }
+
+    public void setPlatnoscisByKursantId(Collection<PlatnosciEntity> platnoscisByKursantId) {
+        this.platnoscisByKursantId = platnoscisByKursantId;
     }
 }

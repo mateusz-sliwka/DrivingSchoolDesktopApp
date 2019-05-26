@@ -19,13 +19,13 @@ class MojeKontoPanel extends JPanel implements ActionListener {
 
     JMenuBar pasek = new JMenuBar();
     JLabel imieLabel = new JLabel("Imię: ");
-    JTextField imieField = new JTextField();
+    JTextField imieField = new JTextField("Podaj swoje imię");
     JLabel nazwiskoLabel = new JLabel("Nazwisko: ");
-    JTextField nazwiskoField = new JTextField();
+    JTextField nazwiskoField = new JTextField("Podaj swoje nazwisko");
     JLabel emailLabel = new JLabel("Adres e-mail: ");
-    JTextField emailField = new JTextField();
+    JTextField emailField = new JTextField("Podaj swoj mail");
     JLabel hasloLabel = new JLabel("Hasło: ");
-    JTextField hasloField = new JPasswordField();
+    JTextField hasloField = new JPasswordField("Podaj swoje haslo");
     JButton aktualizuj = new JButton("Aktualizuj dane konta");
     InstruktorzyControler ic = new InstruktorzyControler();
     RezerwacjeControler rc = new RezerwacjeControler();
@@ -36,9 +36,13 @@ class MojeKontoPanel extends JPanel implements ActionListener {
         ic = new InstruktorzyControler();
         current = ic.getByID(current.getInstruktorId());
         imieField.setText(current.getImie());
+        imieField.setColumns(20);
         nazwiskoField.setText(current.getNazwisko());
+        nazwiskoField.setColumns(20);
         emailField.setText(current.getEmail());
+        emailField.setColumns(20);
         hasloField.setText(current.getHaslo());
+        hasloField.setColumns(20);
     }
 
     MojeKontoPanel(InstruktorzyEntity current) {

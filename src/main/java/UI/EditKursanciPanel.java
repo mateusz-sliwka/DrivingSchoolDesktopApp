@@ -31,11 +31,11 @@ class EditKursanciPanel extends JPanel implements ActionListener {
     KursanciPanel kp;
 
     EditKursanciPanel(long ID, KursanciPanel panel) {
-        kp=panel;
+        kp = panel;
         KursanciControler kc = new KursanciControler();
         register.addActionListener(this);
         cancel.addActionListener(this);
-        current=kc.getByID(ID);
+        current = kc.getByID(ID);
         this.add(loginLabel);
         this.add(login);
         this.add(hasloLabel);
@@ -77,8 +77,8 @@ class EditKursanciPanel extends JPanel implements ActionListener {
             ke.setHaslo(haslo.getText());
             ke.setPesel(pesel.getText());
             ke.setPkk(pkk.getText());
-            kc.update(ke,current.getKursantId());
-            JOptionPane.showMessageDialog(this,"Zaktulizowano konto kursanta");
+            kc.update(ke, current.getKursantId());
+            JOptionPane.showMessageDialog(this, "Zaktulizowano konto kursanta");
             kp.refreshList();
             Window win = SwingUtilities.getWindowAncestor(this);
             ((Window) win).dispose();

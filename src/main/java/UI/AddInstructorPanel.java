@@ -31,7 +31,7 @@ class AddInstructorPanel extends JPanel implements ActionListener {
     InstruktorzyPanel panel;
 
     AddInstructorPanel(InstruktorzyPanel panel) {
-this.panel=panel;
+        this.panel = panel;
         register.addActionListener(this);
         cancel.addActionListener(this);
         this.add(mailLabel);
@@ -78,7 +78,7 @@ this.panel=panel;
 
     void zarejestrowano() {
 
-       InstruktorzyControler ic = new InstruktorzyControler();
+        InstruktorzyControler ic = new InstruktorzyControler();
         InstruktorzyEntity ie = new InstruktorzyEntity();
         ie.setImie(imie.getText());
         ie.setNazwisko(nazwisko.getText());
@@ -89,10 +89,10 @@ this.panel=panel;
         ie.setCzyAdmin(0);
         ie.setDataDodania(new Date(System.currentTimeMillis()));
         ic.add(ie);
-            JOptionPane.showMessageDialog(this, "Konto zostało utworzone!");
+        JOptionPane.showMessageDialog(this, "Konto zostało utworzone!");
         Window win = SwingUtilities.getWindowAncestor(this);
         ((Window) win).dispose();
-            panel.refreshList();
+        panel.refreshList();
 
     }
 

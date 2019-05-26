@@ -25,25 +25,25 @@ class EditUslugaPanel extends JPanel implements ActionListener {
     JButton register = new JButton("Aktualizuj");
     JButton cancel = new JButton("Anuluj");
     JLabel nazwa = new JLabel("Nazwa: ");
-    JTextField nazwaField = new JTextField();
+    JTextField nazwaField = new JTextField(20);
     JLabel cena = new JLabel("Cena: ");
-    JTextField cenaField = new JTextField();
+    JTextField cenaField = new JTextField(20);
     UslugiPanel p1;
     UslugiEntity current;
 
 
     EditUslugaPanel(long ID, UslugiPanel p1) {
-        this.p1=p1;
+        this.p1 = p1;
         current = uc.getByID(ID);
         register.addActionListener(this);
         cancel.addActionListener(this);
-       nazwaField.setText(current.getNazwa());
-       cenaField.setText(String.valueOf(current.getCena()));
+        nazwaField.setText(current.getNazwa());
+        cenaField.setText(String.valueOf(current.getCena()));
 
-       this.add(nazwa);
-       this.add(nazwaField);
-       this.add(cena);
-       this.add(cenaField);
+        this.add(nazwa);
+        this.add(nazwaField);
+        this.add(cena);
+        this.add(cenaField);
         this.add(register);
         this.add(cancel);
         this.setVisible(true);
@@ -60,9 +60,9 @@ class EditUslugaPanel extends JPanel implements ActionListener {
         }
         if (source == register) {
             UslugiEntity ue = new UslugiEntity();
-            ue.setCena((long)Integer.parseInt(cenaField.getText()));
+            ue.setCena((long) Integer.parseInt(cenaField.getText()));
             ue.setNazwa(nazwaField.getText());
-            uc.update(ue,current.getUslugaId());
+            uc.update(ue, current.getUslugaId());
             JOptionPane.showMessageDialog(this, "Usługa zostala zaktualizowana");
             Window win = SwingUtilities.getWindowAncestor(this);
             p1.refreshList();

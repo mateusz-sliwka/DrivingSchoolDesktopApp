@@ -3,16 +3,14 @@ package UI;
 import Controlers.*;
 import Entities.InstruktorzyEntity;
 import Entities.PlatnosciEntity;
-import Entities.UslugiEntity;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-class PlatnosciPanel extends JPanel implements ActionListener {
+class PaymentPanel extends JPanel implements ActionListener {
     private static final long serialVersionUID = 1;
     private InstruktorzyEntity current;
     JLabel login = new JLabel();
@@ -37,12 +35,12 @@ class PlatnosciPanel extends JPanel implements ActionListener {
         List<PlatnosciEntity> kursanci = rc2.getAll();
         for (int i = 0; i < kursanci.size(); i++) {
             String[] zawartosc = {Integer.toString((int) kursanci.get(i).getPlatnoscId()),
-                    kursanci.get(i).getNazwa(),Integer.toString((int)kursanci.get(i).getCena())};
+                    kursanci.get(i).getKursanciByKursantId().getImieNazwisko(),String.valueOf(kursanci.get(i).getKwota()),kursanci.get(i).getDataPlatnosci().toString()};
             model.addRow(zawartosc);
         }
     }
 
-    PlatnosciPanel(InstruktorzyEntity current) {
+    PaymentPanel(InstruktorzyEntity current) {
         edit.addActionListener(this);
         add.addActionListener(this);
         refresh.addActionListener(this);
@@ -74,16 +72,17 @@ class PlatnosciPanel extends JPanel implements ActionListener {
             refreshList();
         }
         if (source == delete) {
+            PlatnosciControler pc = new PlatnosciControler();
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            rc.deleteByID(ID);
+            pc.delete(ID);
             refreshList();
         }
         if (source == edit) {
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            new EditReservationFrame(ID, current.getCzyAdmin());
+            new EditPaymentFrame(ID,this);
         }
         if (source == add) {
-
+            new AddPaymentFrame(this);
         }
     }
 

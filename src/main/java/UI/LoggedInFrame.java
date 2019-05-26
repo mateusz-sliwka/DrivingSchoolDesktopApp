@@ -69,7 +69,7 @@ public class LoggedInFrame extends JFrame implements ActionListener {
             this.setContentPane(panel2);
             this.setVisible(true);
         } else if (source == platnosc) {
-            JPanel panel2 = new PlatnosciPanel(current);
+            JPanel panel2 = new PaymentPanel(current);
             this.setContentPane(panel2);
             this.setVisible(true);
         } else if (source == uslugi) {
@@ -84,13 +84,14 @@ public class LoggedInFrame extends JFrame implements ActionListener {
             JPanel panel2 = new MojeKontoPanel(current);
             this.setContentPane(panel2);
             this.setVisible(true);
-        }if (source == wyloguj) {
+        }
+        if (source == wyloguj) {
             int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz się wylogowac?", "Potwierdź wylogowanie", JOptionPane.YES_NO_OPTION);
             if (decyzja == 0) {
                 new LoginFrame();
                 this.dispose();
             }
-        } else if (source == zamknij ){
+        } else if (source == zamknij) {
             int decyzja = JOptionPane.showConfirmDialog(this, "Czy na pewno chcesz zamknąć program?", "Potwierdź zamykanie", JOptionPane.YES_NO_OPTION);
             if (decyzja == 0) {
                 this.dispose();

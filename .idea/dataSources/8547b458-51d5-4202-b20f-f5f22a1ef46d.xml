@@ -58,8 +58,8 @@
     <schema id="18" parent="1" name="SZKOLAJAZDY">
       <ObjectId>49</ObjectId>
       <CreatedTimestamp>2019-05-06.20:55:13</CreatedTimestamp>
-      <ModifiedTimestamp>2019-05-26.09:52:13</ModifiedTimestamp>
-      <IntrospectionTimestamp>2019-05-26.10:00:24</IntrospectionTimestamp>
+      <ModifiedTimestamp>2019-05-26.20:13:42</ModifiedTimestamp>
+      <IntrospectionTimestamp>2019-05-26.20:14:43</IntrospectionTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -138,7 +138,7 @@
     <table id="32" parent="18" name="PLATNOSCI">
       <ObjectId>20411</ObjectId>
       <CreatedTimestamp>2019-05-22.19:07:09</CreatedTimestamp>
-      <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
+      <ModifiedTimestamp>2019-05-26.20:13:42</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="33" parent="18" name="REZERWACJE">
@@ -382,7 +382,7 @@
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="74" parent="32" name="REZERWACJA_ID">
+    <column id="74" parent="32" name="KURSANT_ID">
       <Position>2</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
@@ -396,11 +396,11 @@
       <DataType>DATE|0s</DataType>
     </column>
     <foreign-key id="77" parent="32" name="PLATNOSCI_FK1">
-      <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
-      <ColNames>REZERWACJA_ID</ColNames>
+      <ModifiedTimestamp>2019-05-26.20:13:42</ModifiedTimestamp>
+      <ColNames>KURSANT_ID</ColNames>
       <RefSchemaName>SZKOLAJAZDY</RefSchemaName>
-      <RefTableName>REZERWACJE</RefTableName>
-      <RefKeyName>REZERWACJE_PK</RefKeyName>
+      <RefTableName>KURSANCI</RefTableName>
+      <RefKeyName>KURSANCI_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
     <column id="78" parent="33" name="REZERWACJA_ID">

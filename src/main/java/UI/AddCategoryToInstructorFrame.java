@@ -7,7 +7,7 @@ public class AddCategoryToInstructorFrame extends JFrame {
     private static final long serialVersionUID = 1L;
     AddCategoryToInstructorPanel panel;
 
-    public AddCategoryToInstructorFrame(long ID,InstruktorzyPanel panel2) {
+    public AddCategoryToInstructorFrame(long ID, InstruktorzyPanel panel2) {
 
         super("Nowe konto kursanta");
         panel = new AddCategoryToInstructorPanel(ID, panel2);

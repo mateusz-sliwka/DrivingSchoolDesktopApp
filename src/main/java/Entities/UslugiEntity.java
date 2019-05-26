@@ -45,6 +45,10 @@ public class UslugiEntity {
         return cena;
     }
 
+    public void setCena(Long cena) {
+        this.cena = cena;
+    }
+
     public void setCena(long cena) {
         this.cena = cena;
     }
@@ -55,7 +59,6 @@ public class UslugiEntity {
         if (o == null || getClass() != o.getClass()) return false;
         UslugiEntity that = (UslugiEntity) o;
         if (uslugaId != that.uslugaId) return false;
-        if (nazwa != null ? !nazwa.equals(that.nazwa) : that.nazwa != null) return false;
         return true;
     }
 
@@ -66,7 +69,7 @@ public class UslugiEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "uslugiByUslugaId",orphanRemoval = true)
+    @OneToMany(mappedBy = "uslugiByUslugaId", orphanRemoval = true)
     public Collection<RezerwacjeEntity> getRezerwacjesByUslugaId() {
         return rezerwacjesByUslugaId;
     }

@@ -23,7 +23,7 @@ class KursanciPanel extends JPanel implements ActionListener {
     JButton refresh = new JButton("Refresh");
     JButton delete = new JButton("Usuń pozycję");
     JButton edit = new JButton("Edytuj pozycje");
-    String[] kolumny = {"ID", "Imie", "Nazwisko", "Email", "Pesel", "PKK","Saldo"};
+    String[] kolumny = {"ID", "Imie", "Nazwisko", "Email", "Pesel", "PKK", "Saldo"};
     JTable kursanciTable = new JTable();
     JButton add = new JButton("Dodaj kursanta");
     DefaultTableModel model = new DefaultTableModel(kolumny, 0);
@@ -45,7 +45,7 @@ class KursanciPanel extends JPanel implements ActionListener {
         for (int i = 0; i < kursanci.size(); i++) {
             String[] zawartosc = {Integer.toString((int) kursanci.get(i).getKursantId()),
                     kursanci.get(i).getImie(), kursanci.get(i).getNazwisko(), kursanci.get(i).getEmail(), kursanci.get(i).getPesel(),
-                    kursanci.get(i).getPkk(),String.valueOf(kc.getSaldo(kursanci.get(i)))};
+                    kursanci.get(i).getPkk(), String.valueOf(kc.getSaldo(kursanci.get(i)))};
             model.addRow(zawartosc);
         }
     }
@@ -87,7 +87,7 @@ class KursanciPanel extends JPanel implements ActionListener {
         }
         if (source == edit) {
             long ID = Integer.parseInt((String) kursanciTable.getValueAt(kursanciTable.getSelectedRow(), 0));
-            new EditKursanciFrame(ID,this);
+            new EditKursanciFrame(ID, this);
         }
         if (source == add) {
             new RegisterFrame();

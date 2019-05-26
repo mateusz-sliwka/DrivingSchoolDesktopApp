@@ -39,7 +39,7 @@ class UslugiPanel extends JPanel implements ActionListener {
         List<UslugiEntity> kursanci = rc2.getAll();
         for (int i = 0; i < kursanci.size(); i++) {
             String[] zawartosc = {Integer.toString((int) kursanci.get(i).getUslugaId()),
-                    kursanci.get(i).getNazwa(),Integer.toString((int)kursanci.get(i).getCena())};
+                    kursanci.get(i).getNazwa(), Integer.toString((int) kursanci.get(i).getCena())};
             model.addRow(zawartosc);
         }
 
@@ -55,7 +55,7 @@ class UslugiPanel extends JPanel implements ActionListener {
 
         login.setText("Zarządzanie usługami");
         delete.addActionListener(this);
-        this.current=current;
+        this.current = current;
         this.add(login);
         this.add(pane);
         this.add(refresh);
@@ -81,14 +81,14 @@ class UslugiPanel extends JPanel implements ActionListener {
         }
         if (source == edit) {
             long ID = Integer.parseInt((String) uslugiTable.getValueAt(uslugiTable.getSelectedRow(), 0));
-            new EditUslugaFrame(ID,this);
+            new EditUslugaFrame(ID, this);
         }
         if (source == add) {
             String tytul = JOptionPane.showInputDialog("Podaj tytul uslugi: ");
             String cena = JOptionPane.showInputDialog("Podaj cene: ");
             UslugiEntity ue = new UslugiEntity();
             ue.setNazwa(tytul);
-            ue.setCena((long)Integer.parseInt(cena));
+            ue.setCena((long) Integer.parseInt(cena));
             UslugiControler uc = new UslugiControler();
             uc.add(ue);
             refreshList();

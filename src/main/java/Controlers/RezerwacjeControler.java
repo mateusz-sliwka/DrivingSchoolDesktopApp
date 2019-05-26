@@ -19,36 +19,43 @@ public class RezerwacjeControler {
         return All;
     }
 
-    public List getByInstruktor(long id){
-        List byInstruktor = entityManager.createQuery("SELECT r FROM RezerwacjeEntity  r WHERE r.instruktorId=:instruktor").setParameter("instruktor",id).getResultList();
+    public List getByInstruktor(long id) {
+        List byInstruktor = entityManager.createQuery("SELECT r FROM RezerwacjeEntity  r WHERE r.instruktorId=:instruktor").setParameter("instruktor", id).getResultList();
         return byInstruktor;
     }
-    public List getByUsluga(long id){
-        List byUsluga = entityManager.createQuery("SELECT r FROM RezerwacjeEntity  r WHERE r.uslugaId=:instruktor").setParameter("instruktor",id).getResultList();
+
+    public List getByUsluga(long id) {
+        List byUsluga = entityManager.createQuery("SELECT r FROM RezerwacjeEntity  r WHERE r.uslugaId=:instruktor").setParameter("instruktor", id).getResultList();
         return byUsluga;
     }
-    public List getByKursant(long id){
-        List byUsluga = entityManager.createQuery("SELECT r FROM RezerwacjeEntity  r WHERE r.kursantId=:instruktor").setParameter("instruktor",id).getResultList();
+
+    public List getByKursant(long id) {
+        List byUsluga = entityManager.createQuery("SELECT r FROM RezerwacjeEntity  r WHERE r.kursantId=:instruktor").setParameter("instruktor", id).getResultList();
         return byUsluga;
     }
-    public void deleteByID(long id){
+
+    public void deleteByID(long id) {
         entityManager.getTransaction().begin();
-        entityManager.createQuery("DELETE FROM RezerwacjeEntity  r WHERE r.rezerwacjaId=:ajdi").setParameter("ajdi",id).executeUpdate();
+        entityManager.createQuery("DELETE FROM RezerwacjeEntity  r WHERE r.rezerwacjaId=:ajdi").setParameter("ajdi", id).executeUpdate();
         entityManager.getTransaction().commit();
     }
-    public RezerwacjeEntity getByID(long id){
-        RezerwacjeEntity re = entityManager.find(RezerwacjeEntity.class,id);
+
+    public RezerwacjeEntity getByID(long id) {
+        RezerwacjeEntity re = entityManager.find(RezerwacjeEntity.class, id);
         return re;
     }
+
     public void add(RezerwacjeEntity re) {
         entityManager.getTransaction().begin();
         entityManager.persist(re);
         entityManager.getTransaction().commit();
     }
-    public void update(RezerwacjeEntity re, long id){
+
+    public void update(RezerwacjeEntity re, long id) {
         entityManager.getTransaction().begin();
         entityManager.createQuery("UPDATE RezerwacjeEntity r SET r.uslugaId=:a, r.kursantId=:b,r.instruktorId=:c where r.rezerwacjaId=:d")
-                .setParameter("a",re.getUslugaId()).setParameter("b",re.getKursantId()).setParameter("c",re.getInstruktorId()).setParameter("d",id).executeUpdate();
+                .setParameter("a", re.getUslugaId()).setParameter("b", re.getKursantId()).setParameter("c", re.getInstruktorId()).setParameter("d", id).executeUpdate();
         entityManager.getTransaction().commit();
-    }}
+    }
+}
     

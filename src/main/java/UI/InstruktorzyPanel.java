@@ -3,11 +3,9 @@ package UI;
 import Controlers.*;
 import Entities.InstruktorzyEntity;
 import Entities.KategorieInstruktorowEntity;
-import Entities.KursanciEntity;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
@@ -24,7 +22,7 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
     JButton delete = new JButton("Usuń pozycję");
     JButton edit = new JButton("Edytuj pozycje");
     JButton przypisz = new JButton("Przypisz kategorie");
-    String[] kolumny = {"ID", "Imie", "Nazwisko", "Start pracy", "Koniec pracy","Email","Kategorie"};
+    String[] kolumny = {"ID", "Imie", "Nazwisko", "Start pracy", "Koniec pracy", "Email", "Kategorie"};
     JTable rezerwacjeTable = new JTable();
     JButton add = new JButton("Dodaj instruktora");
     DefaultTableModel model = new DefaultTableModel(kolumny, 0);
@@ -39,24 +37,24 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
         model.setRowCount(0);
         List<InstruktorzyEntity> instruktorzy = ic.getAll();
         for (int i = 0; i < instruktorzy.size(); i++) {
-            String kategorie="";
+            String kategorie = "";
             KategorieControler kc = new KategorieControler();
             Iterator<KategorieInstruktorowEntity> iterator;
             Collection<KategorieInstruktorowEntity> kolekcja = instruktorzy.get(i).getKategorieInstruktorowsByInstruktorId();
-            for(KategorieInstruktorowEntity kie: kolekcja){
-                kategorie+=kc.getByID(kie.getKategoriaId()).getSymbol();
+            for (KategorieInstruktorowEntity kie : kolekcja) {
+                kategorie += kc.getByID(kie.getKategoriaId()).getSymbol();
             }
-            if(instruktorzy.get(i).getKategorieInstruktorowsByInstruktorId().toArray().length!=0)
-            System.out.println((KategorieInstruktorowEntity)instruktorzy.get(i).getKategorieInstruktorowsByInstruktorId().toArray()[0]);
+            if (instruktorzy.get(i).getKategorieInstruktorowsByInstruktorId().toArray().length != 0)
+                System.out.println((KategorieInstruktorowEntity) instruktorzy.get(i).getKategorieInstruktorowsByInstruktorId().toArray()[0]);
 
-            String[] zawartosc = {Integer.toString((int)instruktorzy.get(i).getInstruktorId()),
+            String[] zawartosc = {Integer.toString((int) instruktorzy.get(i).getInstruktorId()),
                     instruktorzy.get(i).getImie(),
                     instruktorzy.get(i).getNazwisko(),
                     instruktorzy.get(i).getEmail(),
                     instruktorzy.get(i).getGodzRozpoczecia(),
                     instruktorzy.get(i).getGodzZakonczenia(),
                     kategorie
-                    };
+            };
             model.addRow(zawartosc);
         }
     }
@@ -96,10 +94,10 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
             refreshList();
         }
 
-        if (source==przypisz){
-            ic=new InstruktorzyControler();
+        if (source == przypisz) {
+            ic = new InstruktorzyControler();
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            new AddCategoryToInstructorFrame(ID,this);
+            new AddCategoryToInstructorFrame(ID, this);
 
         }
         if (source == delete) {
@@ -109,7 +107,7 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
         }
         if (source == edit) {
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            new EditInstruktorFrame(ID, this);
+            new EditInstructorFrame(ID, this);
         }
         if (source == add) {
             new AddInstructorFrame(this);

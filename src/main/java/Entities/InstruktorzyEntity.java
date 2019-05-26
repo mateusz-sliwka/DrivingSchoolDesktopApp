@@ -81,6 +81,7 @@ public class InstruktorzyEntity implements Serializable {
         return dataDodania;
     }
 
+
     public void setDataDodania(Date dataDodania) {
         this.dataDodania = dataDodania;
     }
@@ -137,6 +138,7 @@ public class InstruktorzyEntity implements Serializable {
     public long getCzyAdmin() {
         return czyAdmin;
     }
+
     public void setCzyAdmin(long czyAdmin) {
         this.czyAdmin = czyAdmin;
     }
@@ -146,7 +148,7 @@ public class InstruktorzyEntity implements Serializable {
         return this.imie + " " + this.nazwisko;
     }
 
-    @OneToMany(mappedBy = "instruktorzyByKategoriaId",orphanRemoval=true)
+    @OneToMany(mappedBy = "instruktorzyByKategoriaId", orphanRemoval = true)
     public Collection<KategorieInstruktorowEntity> getKategorieInstruktorowsByInstruktorId() {
         return kategorieInstruktorowsByInstruktorId;
     }
@@ -155,7 +157,7 @@ public class InstruktorzyEntity implements Serializable {
         this.kategorieInstruktorowsByInstruktorId = kategorieInstruktorowsByInstruktorId;
     }
 
-    @OneToMany(mappedBy = "instruktorzyByInstruktorId",orphanRemoval=true)
+    @OneToMany(mappedBy = "instruktorzyByInstruktorId", orphanRemoval = true)
     public Collection<RezerwacjeEntity> getRezerwacjesByInstruktorId() {
         return rezerwacjesByInstruktorId;
     }

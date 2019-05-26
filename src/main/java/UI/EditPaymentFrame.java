@@ -3,13 +3,13 @@ package UI;
 import javax.swing.*;
 import java.awt.*;
 
-public class EditUslugaFrame extends JFrame {
+public class EditPaymentFrame extends JFrame {
     private static final long serialVersionUID = 1L;
 
 
-    public EditUslugaFrame(long ID, UslugiPanel p1) {
+    public EditPaymentFrame(long ID, PaymentPanel p1) {
         super("Edycja usługia");
-        EditUslugaPanel panel = new EditUslugaPanel(ID, p1);
+        EditPaymentPanel panel = new EditPaymentPanel(ID, p1);
         this.setSize(new Dimension(280, 180));
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panel);

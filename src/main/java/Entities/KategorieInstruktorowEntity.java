@@ -31,6 +31,7 @@ public class KategorieInstruktorowEntity implements Serializable {
     public long getInstructorId() {
         return instructorId;
     }
+
     public void setInstructorId(long instructorId) {
         this.instructorId = instructorId;
     }
@@ -61,7 +62,7 @@ public class KategorieInstruktorowEntity implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "KATEGORIA_ID", referencedColumnName = "KATEGORIA_ID", nullable = false,insertable=false ,updatable=false)
+    @JoinColumn(name = "KATEGORIA_ID", referencedColumnName = "KATEGORIA_ID", nullable = false, insertable = false, updatable = false)
     public KategorieEntity getKategorieByKategoriaId() {
         return kategorieByKategoriaId;
     }
@@ -71,7 +72,7 @@ public class KategorieInstruktorowEntity implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "KATEGORIA_ID", referencedColumnName = "INSTRUKTOR_ID", nullable = false,insertable=false ,updatable=false)
+    @JoinColumn(name = "KATEGORIA_ID", referencedColumnName = "INSTRUKTOR_ID", nullable = false, insertable = false, updatable = false)
     public InstruktorzyEntity getInstruktorzyByKategoriaId() {
         return instruktorzyByKategoriaId;
     }

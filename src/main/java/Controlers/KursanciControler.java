@@ -7,7 +7,6 @@ import Entities.RezerwacjeEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.sql.Array;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Iterator;
@@ -66,15 +65,10 @@ public class KursanciControler {
         entityManager.getTransaction().begin();
         KursanciEntity ke = entityManager.find(KursanciEntity.class, id);
         entityManager.remove(ke);
-        //entityManager.createQuery("DELETE FROM KursanciEntity  r WHERE r.kursantId=:ajdi").setParameter("ajdi",id).executeUpdate();
         entityManager.getTransaction().commit();
 
     }
 
-    public long getMaxID() {
-        long result = (long) entityManager.createQuery("SELECT MAX(ke.kursantId) FROM KursanciEntity ke").getSingleResult();
-        return result;
-    }
 
     public void update(KursanciEntity re, long id) {
         entityManager.getTransaction().begin();
@@ -89,14 +83,16 @@ public class KursanciControler {
         long wplata = 0;
         Collection<RezerwacjeEntity> rezerwacje = ke.getRezerwacjesByKursantId();
         Iterator<RezerwacjeEntity> iterator = rezerwacje.iterator();
+        Iterator<PlatnosciEntity> iterator2 = ke.getPlatnoscisByKursantId().iterator();
         while (iterator.hasNext()) {
             RezerwacjeEntity kes = iterator.next();
             naleznosc += kes.getUslugiByUslugaId().getCena();
-            Iterator<PlatnosciEntity> iterator2 = kes.getPlatnoscisByRezerwacjaId().iterator();
-            while (iterator2.hasNext())
+            System.out.println(ke.getPlatnoscisByKursantId().size());
+            while (iterator2.hasNext()) {
+                System.out.println(wplata);
                 wplata += iterator2.next().getKwota();
+            }
         }
-
         return wplata - naleznosc;
     }
 }

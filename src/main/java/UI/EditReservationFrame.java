@@ -10,7 +10,7 @@ public class EditReservationFrame extends JFrame {
     public EditReservationFrame(long ID, long flaga) {
         super("Edycja rezerwacji");
         EditReservationPanel panel = new EditReservationPanel(ID, flaga);
-        this.setSize(new Dimension(280, 400));
+        this.setSize(new Dimension(280, 200));
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panel);
         this.setVisible(true);
