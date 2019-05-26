@@ -18,7 +18,7 @@ class LoginPanel extends JPanel implements ActionListener {
     JTextField login = new JTextField(20);
     JLabel hasloLabel = new JLabel("Podaj haslo:");
     JTextField haslo = new JPasswordField(20);
-    String[] typy = {"Kursant","Instruktor","Administrator"};
+    String[] typy = {"Kursant","Instruktor"};
     JLabel typ = new JLabel("Wybierz typ konta:");
     JComboBox<String> typBox = new JComboBox<String>(typy);
     JLabel komunikat = new JLabel("<html><font color='red'>Podane dane logowania są nieprawidłowe.</html>");
@@ -63,21 +63,13 @@ class LoginPanel extends JPanel implements ActionListener {
                     new UserFrame(kursant);
                 }
             }
-            else if(typBox.getSelectedItem().toString()=="Administrator"){
-                InstruktorzyEntity instruktor = new InstruktorzyControler().loginAdmin((login.getText()),haslo.getText());
-                if(instruktor==null)
-                    niezalogowano();
-                else{
-                    zalogowano();
-                new AdminFrame(instruktor);}
-            }
             else if(typBox.getSelectedItem().toString()=="Instruktor"){
                 InstruktorzyEntity instruktor = new InstruktorzyControler().login((login.getText()),haslo.getText());
                 if(instruktor==null)
                     niezalogowano();
                 else{
                     zalogowano();
-                    new InstructorFrame(instruktor);}
+                    new LoggedInFrame(instruktor);}
             }
 
         }

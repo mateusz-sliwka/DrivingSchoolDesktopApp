@@ -1,22 +1,22 @@
 package Entities;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Date;
 
 @Entity
 @Table(name = "REZERWACJE", schema = "SZKOLAJAZDY", catalog = "")
 public class RezerwacjeEntity {
+    @Id
+    @GeneratedValue(strategy=GenerationType.TABLE)
     private long rezerwacjaId;
-    private Time dataDodania;
+    private Date dataDodania;
     private Long uslugaId;
     private Long kursantId;
     private Long instruktorId;
-    private Long instruktorid;
-    private Long kursantid;
-    private Long uslugaid;
 
     @Id
     @Column(name = "REZERWACJA_ID")
+    @GeneratedValue(strategy=GenerationType.TABLE)
     public long getRezerwacjaId() {
         return rezerwacjaId;
     }
@@ -27,11 +27,11 @@ public class RezerwacjeEntity {
 
     @Basic
     @Column(name = "DATA_DODANIA")
-    public Time getDataDodania() {
+    public Date getDataDodania() {
         return dataDodania;
     }
 
-    public void setDataDodania(Time dataDodania) {
+    public void setDataDodania(Date dataDodania) {
         this.dataDodania = dataDodania;
     }
 
@@ -53,6 +53,7 @@ public class RezerwacjeEntity {
     }
 
     @Basic
+    @Column(name = "USLUGA_ID")
     public Long getUslugaId() {
         return uslugaId;
     }
@@ -62,6 +63,7 @@ public class RezerwacjeEntity {
     }
 
     @Basic
+    @Column(name = "KURSANT_ID")
     public Long getKursantId() {
         return kursantId;
     }
@@ -71,6 +73,7 @@ public class RezerwacjeEntity {
     }
 
     @Basic
+    @Column(name = "INSTRUKTOR_ID")
     public Long getInstruktorId() {
         return instruktorId;
     }
@@ -79,33 +82,5 @@ public class RezerwacjeEntity {
         this.instruktorId = instruktorId;
     }
 
-    @Basic
-    @Column(name = "INSTRUKTORID")
-    public Long getInstruktorid() {
-        return instruktorid;
-    }
 
-    public void setInstruktorid(Long instruktorid) {
-        this.instruktorid = instruktorid;
-    }
-
-    @Basic
-    @Column(name = "KURSANTID")
-    public Long getKursantid() {
-        return kursantid;
-    }
-
-    public void setKursantid(Long kursantid) {
-        this.kursantid = kursantid;
-    }
-
-    @Basic
-    @Column(name = "USLUGAID")
-    public Long getUslugaid() {
-        return uslugaid;
-    }
-
-    public void setUslugaid(Long uslugaid) {
-        this.uslugaid = uslugaid;
-    }
 }

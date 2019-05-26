@@ -38,4 +38,17 @@ public class KursanciControler {
             return null;
         return result.get(0);
     }
+    public KursanciEntity getByID(long ID){
+            KursanciEntity result = (KursanciEntity) entityManager.createQuery("SELECT i FROM KursanciEntity  i WHERE i.kursantId=:a").setParameter("a",ID).getSingleResult();
+            return result;
+    }
+    public KursanciEntity getByFS(String napis){
+
+            String imie = napis.split(" ")[0];
+            String nazwisko = napis.split(" ")[1];
+            KursanciEntity result = (KursanciEntity) entityManager.createQuery("SELECT i from KursanciEntity i WHERE i.imie=:a AND i.nazwisko=:b")
+                    .setParameter("a",imie).setParameter("b",nazwisko).getSingleResult();
+            return result;
+
+    }
 }

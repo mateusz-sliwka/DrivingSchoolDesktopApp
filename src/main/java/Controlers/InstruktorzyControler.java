@@ -24,6 +24,10 @@ public class InstruktorzyControler {
                 setParameter("a", a).setParameter("b",b).getResultList();
         return byTime;
     }
+    public InstruktorzyEntity getByID(long ID){
+        InstruktorzyEntity result = (InstruktorzyEntity) entityManager.createQuery("SELECT i FROM InstruktorzyEntity  i WHERE i.instruktorId=:a").setParameter("a",ID).getSingleResult();
+        return result;
+    }
     public InstruktorzyEntity login(String email, String haslo) {
         List<InstruktorzyEntity> result = entityManager.createQuery("SELECT u FROM InstruktorzyEntity  u WHERE u.email=:email AND u.haslo=:haslo")
                 .setParameter("email",email).setParameter("haslo",haslo).getResultList();
@@ -31,11 +35,19 @@ public class InstruktorzyControler {
             return null;
         return result.get(0);
     }
+
     public InstruktorzyEntity loginAdmin(String email, String haslo) {
         List<InstruktorzyEntity> result = entityManager.createQuery("SELECT u FROM InstruktorzyEntity  u WHERE u.email=:email AND u.haslo=:haslo AND u.czyAdmin=1")
                 .setParameter("email",email).setParameter("haslo",haslo).getResultList();
         if(result.isEmpty())
             return null;
         return result.get(0);
+    }
+    public InstruktorzyEntity getByFS(String napis){
+        String imie = napis.split(" ")[0];
+        String nazwisko = napis.split(" ")[1];
+        InstruktorzyEntity result = (InstruktorzyEntity) entityManager.createQuery("SELECT i from InstruktorzyEntity i WHERE i.imie=:a AND i.nazwisko=:b")
+                .setParameter("a",imie).setParameter("b",nazwisko).getSingleResult();
+        return result;
     }
 }

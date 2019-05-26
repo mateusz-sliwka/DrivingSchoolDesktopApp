@@ -136,4 +136,9 @@ public class InstruktorzyEntity {
     public void setCzyAdmin(long czyAdmin) {
         this.czyAdmin = czyAdmin;
     }
+
+    @Transient
+    public String getImieNazwisko(){
+        return this.imie+" "+this.nazwisko;
+    }
 }

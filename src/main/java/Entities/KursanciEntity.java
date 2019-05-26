@@ -129,4 +129,8 @@ public class KursanciEntity {
         result = 31 * result + (dataRejestracji != null ? dataRejestracji.hashCode() : 0);
         return result;
     }
+    @Transient
+    public String getImieNazwisko(){
+        return this.imie+" "+this.nazwisko;
+    }
 }
