@@ -87,7 +87,6 @@ class LoginPanel extends JPanel implements ActionListener {
     }
     void niezalogowano(){
         komunikat.setVisible(true);
-        login.setText("");
         haslo.setText("");
     }
 }
