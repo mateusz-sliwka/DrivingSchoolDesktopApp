@@ -27,7 +27,7 @@ class ReservationPanel extends JPanel implements ActionListener {
     JButton refresh = new JButton("Refresh");
     JButton delete = new JButton("Usuń pozycję");
     JButton edit = new JButton("Edytuj pozycje");
-    JButton plik = new JButton("Generuj plik");
+    JButton plik = new JButton("Wygeneruj raport Twoich zajęć");
     JMenuItem menu = new JMenuItem("Zarządzaj rezerwacjami");
     String[] kolumny = {"ID", "Usługa", "Kursant", "Instruktor", "Data dodania"};
     JTable rezerwacjeTable = new JTable();

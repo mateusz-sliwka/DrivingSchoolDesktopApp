@@ -20,7 +20,7 @@ public class RezerwacjeControler {
     }
 
     public List getByInstruktor(long id) {
-        List byInstruktor = entityManager.createQuery("SELECT r FROM RezerwacjeEntity  r WHERE r.instruktorId=:instruktor").setParameter("instruktor", id).getResultList();
+        List<RezerwacjeEntity> byInstruktor = entityManager.createQuery("SELECT r FROM RezerwacjeEntity  r WHERE r.instruktorId=:instruktor").setParameter("instruktor", id).getResultList();
         return byInstruktor;
     }
 

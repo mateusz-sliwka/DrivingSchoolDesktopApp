@@ -38,8 +38,9 @@ public class LoggedInFrame extends JFrame implements ActionListener {
         rezerwacje.addActionListener(this);
         konto.addActionListener(this);
         bar.add(rezerwacje);
+        bar.add(kursanci);
         if (current.getCzyAdmin() == 1) {
-            bar.add(kursanci);
+
             bar.add(instruktorzy);
             bar.add(platnosc);
             bar.add(uslugi);

@@ -95,4 +95,26 @@ public class KursanciControler {
         }
         return wplata - naleznosc;
     }
+
+    public List<KursanciEntity> getByInstruktor(long ID) {
+        List<KursanciEntity> all = entityManager.createQuery("SELECT k FROM KursanciEntity k").getResultList();
+        Iterator<KursanciEntity> iterator = all.iterator();
+        boolean starczy = false;
+        while (iterator.hasNext()) {
+            starczy=false;
+            KursanciEntity current = iterator.next();
+            Iterator<RezerwacjeEntity> iterator2 = current.getRezerwacjesByKursantId().iterator();
+            while (iterator2.hasNext()) {
+                if (iterator2.next().getInstruktorId() == ID) {
+                    starczy = true;
+                }
+            }
+
+            if (!starczy) {
+                iterator.remove();
+            }
+
+        }
+        return all;
+    }
 }
