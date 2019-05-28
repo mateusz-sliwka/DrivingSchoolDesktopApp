@@ -22,14 +22,14 @@ import java.awt.event.ActionListener;
 class ReservationPanel extends JPanel implements ActionListener {
     private static final long serialVersionUID = 1;
     private InstruktorzyEntity current;
-    JLabel login = new JLabel();
+    JLabel login = new JLabel("Zarządzaj rezerwacjami");
     JMenuBar pasek = new JMenuBar();
     JButton refresh = new JButton("Refresh");
     JButton delete = new JButton("Usuń pozycję");
     JButton edit = new JButton("Edytuj pozycje");
     JButton plik = new JButton("Wygeneruj raport Twoich zajęć");
     JMenuItem menu = new JMenuItem("Zarządzaj rezerwacjami");
-    String[] kolumny = {"ID", "Usługa", "Kursant", "Instruktor", "Data dodania"};
+    String[] kolumny = {"ID", "Usługa", "Kategoria", "Kursant", "Instruktor", "Godzina rezerwacji","Data rezerwacji"};
     JTable rezerwacjeTable = new JTable();
     JButton add = new JButton("Dodaj rezerwacje");
     DefaultTableModel model = new DefaultTableModel(kolumny, 0);
@@ -54,9 +54,11 @@ class ReservationPanel extends JPanel implements ActionListener {
             System.out.println(rezerwacje.get(i).getInstruktorId());
             String[] zawartosc = {Integer.toString((int) rezerwacje.get(i).getRezerwacjaId()),
                     rezerwacje.get(i).getUslugiByUslugaId().getNazwa(),
+                    rezerwacje.get(i).getKategorieByKategoriaId().getSymbol(),
                     rezerwacje.get(i).getKursanciByKursantId().getImieNazwisko(),
                     rezerwacje.get(i).getInstruktorzyByInstruktorId().getImieNazwisko(),
-                    (rezerwacje.get(i).getDataDodania().toString())};
+                    rezerwacje.get(i).getGodzRozpoczecia(),
+                    (rezerwacje.get(i).getDataRezerwacji().toString())};
             model.addRow(zawartosc);
         }
     }
@@ -71,7 +73,6 @@ class ReservationPanel extends JPanel implements ActionListener {
         rezerwacjeTable.setAutoCreateRowSorter(true);
         pasek.add(menu);
         System.out.println(current.getImie());
-        login.setText("Zarządzanie rezerwacjami");
         delete.addActionListener(this);
         this.current = current;
         this.add(login);
@@ -106,7 +107,7 @@ class ReservationPanel extends JPanel implements ActionListener {
                 System.out.println(date1);
                 System.out.println(date2);
                 RezerwacjeControler rc = new RezerwacjeControler();
-                List<RezerwacjeEntity> rezerwacje = rc.getByInstruktor(current.getInstruktorId());
+                List<RezerwacjeEntity> rezerwacje = ( List<RezerwacjeEntity>) current.getRezerwacjesByInstruktorId();
                 FileWriter fw = new FileWriter(new File(nazwa + ".txt"));
                 fw.write("Raport dla instruktora " + current.getImieNazwisko() + " za okres od " + date1.toString() + " do " + date2.toString()
                         + "\nZrealizowane zajęcia: " + String.valueOf(rezerwacje.size())
@@ -127,16 +128,20 @@ class ReservationPanel extends JPanel implements ActionListener {
 
         }
         if (source == delete) {
+            if(!rezerwacjeTable.getSelectionModel().isSelectionEmpty()){
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
             rc.deleteByID(ID);
-            refreshList();
+            refreshList(); }  else
+            JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");
         }
         if (source == edit) {
+            if(!rezerwacjeTable.getSelectionModel().isSelectionEmpty()){
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            new EditReservationFrame(ID, current.getCzyAdmin());
+            new EditReservationFrame(ID, current.getCzyAdmin(),this,current); }  else
+            JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");
         }
         if (source == add) {
-            new AddReservationFrame(current.getCzyAdmin(), this);
+            new AddReservationFrame(current.getCzyAdmin(), this, current);
         }
     }
 

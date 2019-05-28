@@ -105,6 +105,7 @@ public class KursanciEntity implements Serializable {
         return dataRejestracji;
     }
 
+
     public void setDataRejestracji(Date dataRejestracji) {
         this.dataRejestracji = dataRejestracji;
     }

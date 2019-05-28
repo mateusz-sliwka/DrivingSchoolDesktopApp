@@ -17,6 +17,7 @@ public class PlatnosciEntity {
     private long kursantId;
     private KursanciEntity kursanciByKursantId;
 
+    @Basic
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PLATNOSC_ID", nullable = false, precision = 0)
@@ -34,6 +35,10 @@ public class PlatnosciEntity {
         return kwota;
     }
 
+    public void setKwota(Long kwota) {
+        this.kwota = kwota;
+    }
+
     public void setKwota(long kwota) {
         this.kwota = kwota;
     }
@@ -43,6 +48,7 @@ public class PlatnosciEntity {
     public Date getDataPlatnosci() {
         return dataPlatnosci;
     }
+
 
     public void setDataPlatnosci(Date dataPlatnosci) {
         this.dataPlatnosci = dataPlatnosci;
@@ -78,7 +84,7 @@ public class PlatnosciEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "KURSANT_ID", referencedColumnName = "KURSANT_ID", nullable = false, updatable = false, insertable = false)
+   @JoinColumn(name = "KURSANT_ID", referencedColumnName = "KURSANT_ID", nullable = false, updatable = false, insertable = false)
     public KursanciEntity getKursanciByKursantId() {
         return kursanciByKursantId;
     }

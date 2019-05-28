@@ -86,7 +86,6 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
         this.add(add);
         this.add(edit);
         this.add(delete);
-        this.add(przypisz);
         this.add(plik);
         plik.addActionListener(this);
 
@@ -104,26 +103,28 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
             refreshList();
         }
 
-        if (source == przypisz) {
-            ic = new InstruktorzyControler();
-            long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            new AddCategoryToInstructorFrame(ID, this);
-
-        }
         if (source == delete) {
+            if(!rezerwacjeTable.getSelectionModel().isSelectionEmpty()) {
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
             ic.deleteByID(ID);
-            refreshList();
+            refreshList(); }  else
+                JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");
         }
         if (source == edit) {
-            long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
-            new EditInstructorFrame(ID, this);
+            if(!rezerwacjeTable.getSelectionModel().isSelectionEmpty()) {
+                long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
+                new EditInstructorFrame(ID, this);
+            }  else
+                JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");
+
         }
         if (source == add) {
             new AddInstructorFrame(this);
         }
         if (source == plik) {
+            if(!rezerwacjeTable.getSelectionModel().isSelectionEmpty()){
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
+
             try {
                 String nazwa = JOptionPane.showInputDialog("Podaj nazwe pliku: ");
                 String data1 = JOptionPane.showInputDialog("Od jakiej daty (yyyy-mm-dd)");
@@ -151,8 +152,9 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }
-
         }
-    }
+        else
+            JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");
+    }}
 
 }

@@ -58,8 +58,8 @@
     <schema id="18" parent="1" name="SZKOLAJAZDY">
       <ObjectId>49</ObjectId>
       <CreatedTimestamp>2019-05-06.20:55:13</CreatedTimestamp>
-      <ModifiedTimestamp>2019-05-26.20:13:42</ModifiedTimestamp>
-      <IntrospectionTimestamp>2019-05-26.20:14:43</IntrospectionTimestamp>
+      <ModifiedTimestamp>2019-05-28.18:24:44</ModifiedTimestamp>
+      <IntrospectionTimestamp>2019-05-28.18:26:19</IntrospectionTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -126,7 +126,7 @@
     <table id="30" parent="18" name="KATEGORIE_INSTRUKTOROW">
       <ObjectId>20409</ObjectId>
       <CreatedTimestamp>2019-05-22.19:07:09</CreatedTimestamp>
-      <ModifiedTimestamp>2019-05-26.09:52:13</ModifiedTimestamp>
+      <ModifiedTimestamp>2019-05-28.18:24:44</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="31" parent="18" name="KURSANCI">
@@ -144,7 +144,7 @@
     <table id="33" parent="18" name="REZERWACJE">
       <ObjectId>20412</ObjectId>
       <CreatedTimestamp>2019-05-22.19:07:09</CreatedTimestamp>
-      <ModifiedTimestamp>2019-05-25.15:40:16</ModifiedTimestamp>
+      <ModifiedTimestamp>2019-05-28.17:34:44</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="34" parent="18" name="USLUGI">
@@ -318,8 +318,8 @@
       <OnDelete>restrict</OnDelete>
     </foreign-key>
     <foreign-key id="62" parent="30" name="KATEGORIE_INSTRUKTOROW_FK2">
-      <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
-      <ColNames>KATEGORIA_ID</ColNames>
+      <ModifiedTimestamp>2019-05-28.18:24:44</ModifiedTimestamp>
+      <ColNames>INSTRUCTOR_ID</ColNames>
       <RefSchemaName>SZKOLAJAZDY</RefSchemaName>
       <RefTableName>INSTRUKTORZY</RefTableName>
       <RefKeyName>INSTRUKTORZY_PK</RefKeyName>
@@ -426,8 +426,24 @@
     <column id="82" parent="33" name="DATA_DODANIA">
       <Position>5</Position>
       <DataType>DATE|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <index id="83" parent="33" name="REZERWACJE_PK">
+    <column id="83" parent="33" name="KATEGORIA_ID">
+      <Position>6</Position>
+      <DataType>NUMBER(*)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="84" parent="33" name="GODZ_ROZPOCZECIA">
+      <Position>7</Position>
+      <DataType>VARCHAR2(20 byte)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="85" parent="33" name="DATA_REZERWACJI">
+      <Position>8</Position>
+      <DataType>DATE|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="86" parent="33" name="REZERWACJE_PK">
       <ObjectId>20418</ObjectId>
       <CreatedTimestamp>2019-05-22.19:07:09</CreatedTimestamp>
       <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
@@ -435,14 +451,14 @@
       <ColNames>REZERWACJA_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="84" parent="33" name="REZERWACJE_PK">
+    <key id="87" parent="33" name="REZERWACJE_PK">
       <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
       <ColNames>REZERWACJA_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>REZERWACJE_PK</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="85" parent="33" name="REZERWACJE_FK1">
+    <foreign-key id="88" parent="33" name="REZERWACJE_FK1">
       <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
       <ColNames>USLUGA_ID</ColNames>
       <RefSchemaName>SZKOLAJAZDY</RefSchemaName>
@@ -450,7 +466,7 @@
       <RefKeyName>USLUGI_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <foreign-key id="86" parent="33" name="REZERWACJE_FK2">
+    <foreign-key id="89" parent="33" name="REZERWACJE_FK2">
       <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
       <ColNames>KURSANT_ID</ColNames>
       <RefSchemaName>SZKOLAJAZDY</RefSchemaName>
@@ -458,7 +474,7 @@
       <RefKeyName>KURSANCI_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <foreign-key id="87" parent="33" name="REZERWACJE_FK3">
+    <foreign-key id="90" parent="33" name="REZERWACJE_FK3">
       <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
       <ColNames>INSTRUKTOR_ID</ColNames>
       <RefSchemaName>SZKOLAJAZDY</RefSchemaName>
@@ -466,21 +482,29 @@
       <RefKeyName>INSTRUKTORZY_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <column id="88" parent="34" name="USLUGA_ID">
+    <foreign-key id="91" parent="33" name="REZERWACJE_FK4">
+      <ModifiedTimestamp>2019-05-28.17:34:44</ModifiedTimestamp>
+      <ColNames>KATEGORIA_ID</ColNames>
+      <RefSchemaName>SZKOLAJAZDY</RefSchemaName>
+      <RefTableName>KATEGORIE</RefTableName>
+      <RefKeyName>KATEGORIE_PK</RefKeyName>
+      <OnDelete>restrict</OnDelete>
+    </foreign-key>
+    <column id="92" parent="34" name="USLUGA_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="89" parent="34" name="NAZWA">
+    <column id="93" parent="34" name="NAZWA">
       <Position>2</Position>
       <DataType>VARCHAR2(20 byte)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="90" parent="34" name="CENA">
+    <column id="94" parent="34" name="CENA">
       <Position>3</Position>
       <DataType>NUMBER(6 digit)|0s</DataType>
     </column>
-    <index id="91" parent="34" name="USLUGI_PK">
+    <index id="95" parent="34" name="USLUGI_PK">
       <ObjectId>20416</ObjectId>
       <CreatedTimestamp>2019-05-22.19:07:09</CreatedTimestamp>
       <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
@@ -488,22 +512,22 @@
       <ColNames>USLUGA_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="92" parent="34" name="USLUGI_PK">
+    <key id="96" parent="34" name="USLUGI_PK">
       <ModifiedTimestamp>2019-05-22.19:07:09</ModifiedTimestamp>
       <ColNames>USLUGA_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>USLUGI_PK</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <argument id="93" parent="36">
+    <argument id="97" parent="36">
       <ArgumentDirection>R</ArgumentDirection>
       <DataType>VARCHAR2|0s</DataType>
     </argument>
-    <argument id="94" parent="36" name="P_USERNAME">
+    <argument id="98" parent="36" name="P_USERNAME">
       <Position>1</Position>
       <DataType>VARCHAR2|0s</DataType>
     </argument>
-    <argument id="95" parent="36" name="P_PASSWORD">
+    <argument id="99" parent="36" name="P_PASSWORD">
       <Position>2</Position>
       <DataType>VARCHAR2|0s</DataType>
     </argument>

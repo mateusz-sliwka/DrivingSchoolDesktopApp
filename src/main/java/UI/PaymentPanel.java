@@ -72,16 +72,22 @@ class PaymentPanel extends JPanel implements ActionListener {
             refreshList();
         }
         if (source == delete) {
+            if(!rezerwacjeTable.getSelectionModel().isSelectionEmpty()){
             PlatnosciControler pc = new PlatnosciControler();
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
             pc.delete(ID);
-            refreshList();
+            refreshList();}  else
+                JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");
+
         }
         if (source == edit) {
+            if(!rezerwacjeTable.getSelectionModel().isSelectionEmpty()){
             long ID = Integer.parseInt((String) rezerwacjeTable.getValueAt(rezerwacjeTable.getSelectedRow(), 0));
             new EditPaymentFrame(ID,this);
-        }
-        if (source == add) {
+        } else
+            JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");}
+
+            if (source == add) {
             new AddPaymentFrame(this);
         }
     }

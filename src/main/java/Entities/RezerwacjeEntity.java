@@ -1,6 +1,6 @@
 package Entities;
 
-import org.hibernate.annotations.Cascade;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,6 +22,10 @@ public class RezerwacjeEntity implements Serializable {
     private UslugiEntity uslugiByUslugaId;
     private KursanciEntity kursanciByKursantId;
     private InstruktorzyEntity instruktorzyByInstruktorId;
+    private long kategoriaId;
+    private String godzRozpoczecia;
+    private Date dataRezerwacji;
+    private KategorieEntity kategorieByKategoriaId;
 
     @Id
     @Column(name = "REZERWACJA_ID", nullable = false, precision = 0)
@@ -35,7 +39,7 @@ public class RezerwacjeEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "DATA_DODANIA", nullable = true)
+    @Column(name = "DATA_DODANIA", nullable = false)
     public Date getDataDodania() {
         return dataDodania;
     }
@@ -62,7 +66,7 @@ public class RezerwacjeEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "USLUGA_ID")
+    @Column(name = "USLUGA_ID", nullable = false, precision = 0)
     public long getUslugaId() {
         return uslugaId;
     }
@@ -72,7 +76,7 @@ public class RezerwacjeEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "KURSANT_ID")
+    @Column(name = "KURSANT_ID", nullable = false, precision = 0)
     public long getKursantId() {
         return kursantId;
     }
@@ -82,7 +86,7 @@ public class RezerwacjeEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "INSTRUKTOR_ID")
+    @Column(name = "INSTRUKTOR_ID", nullable = false, precision = 0)
     public long getInstruktorId() {
         return instruktorId;
     }
@@ -90,7 +94,6 @@ public class RezerwacjeEntity implements Serializable {
     public void setInstruktorId(long instruktorId) {
         this.instruktorId = instruktorId;
     }
-
 
     @ManyToOne
     @JoinColumn(name = "USLUGA_ID", referencedColumnName = "USLUGA_ID", nullable = false, insertable = false, updatable = false)
@@ -103,7 +106,7 @@ public class RezerwacjeEntity implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "KURSANT_ID", referencedColumnName = "KURSANT_ID", nullable = false, insertable = false, updatable = false)
+   @JoinColumn(name = "KURSANT_ID", referencedColumnName = "KURSANT_ID", nullable = false, insertable = false, updatable = false)
     public KursanciEntity getKursanciByKursantId() {
         return kursanciByKursantId;
     }
@@ -124,6 +127,48 @@ public class RezerwacjeEntity implements Serializable {
 
     @Transient
     public String doRaportu() {
-        return "\n===================\n Data: " + dataDodania.toString() + "\nTyp: " + uslugiByUslugaId.getNazwa() + "\nKursant: " + kursanciByKursantId.getImieNazwisko() + "\nInstruktor: " + instruktorzyByInstruktorId.getImieNazwisko();
+        return "\n===================\n Data: " + dataDodania.toString() +"\nKursant: " + kursanciByKursantId.getImieNazwisko() + "\nInstruktor: " + instruktorzyByInstruktorId.getImieNazwisko()
+        +"\nKategoria: "+kategorieByKategoriaId.getSymbol()+ "\nTyp: " + uslugiByUslugaId.getNazwa() +"\nData zajec: "+getDataRezerwacji()+" "+getGodzRozpoczecia()+":00";
+    }
+
+    @Basic
+    @Column(name = "KATEGORIA_ID", nullable = false, precision = 0)
+    public long getKategoriaId() {
+        return kategoriaId;
+    }
+
+    public void setKategoriaId(long kategoriaId) {
+        this.kategoriaId = kategoriaId;
+    }
+
+    @Basic
+    @Column(name = "GODZ_ROZPOCZECIA", nullable = false, length = 20)
+    public String getGodzRozpoczecia() {
+        return godzRozpoczecia;
+    }
+
+    public void setGodzRozpoczecia(String godzRozpoczecia) {
+        this.godzRozpoczecia = godzRozpoczecia;
+    }
+
+    @Basic
+    @Column(name = "DATA_REZERWACJI", nullable = false)
+    public Date getDataRezerwacji() {
+        return dataRezerwacji;
+    }
+
+
+    public void setDataRezerwacji(Date dataRezerwacji) {
+        this.dataRezerwacji = dataRezerwacji;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "KATEGORIA_ID", referencedColumnName = "KATEGORIA_ID", nullable = false, insertable = false, updatable = false)
+    public KategorieEntity getKategorieByKategoriaId() {
+        return kategorieByKategoriaId;
+    }
+
+    public void setKategorieByKategoriaId(KategorieEntity kategorieByKategoriaId) {
+        this.kategorieByKategoriaId = kategorieByKategoriaId;
     }
 }

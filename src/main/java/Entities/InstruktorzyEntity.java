@@ -148,7 +148,7 @@ public class InstruktorzyEntity implements Serializable {
         return this.imie + " " + this.nazwisko;
     }
 
-    @OneToMany(mappedBy = "instruktorzyByKategoriaId", orphanRemoval = true)
+    @OneToMany(mappedBy = "instruktorzyByInstructorId", orphanRemoval = true)
     public Collection<KategorieInstruktorowEntity> getKategorieInstruktorowsByInstruktorId() {
         return kategorieInstruktorowsByInstruktorId;
     }

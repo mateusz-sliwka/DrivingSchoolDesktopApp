@@ -16,6 +16,7 @@ public class LoggedInFrame extends JFrame implements ActionListener {
     JMenuItem instruktorzy = new JMenuItem("Instruktorzy");
     JMenuItem platnosc = new JMenuItem("Płatności");
     JMenuItem uslugi = new JMenuItem("Usługi");
+    JMenuItem kategorie = new JMenuItem("Kategorie");
     JMenuItem konto = new JMenuItem("Twoje konto");
     JMenu program = new JMenu("Program");
     JMenuItem zamknij = new JMenuItem("Zamknij program");
@@ -34,6 +35,7 @@ public class LoggedInFrame extends JFrame implements ActionListener {
         platnosc.addActionListener(this);
         uslugi.addActionListener(this);
         wyloguj.addActionListener(this);
+        kategorie.addActionListener(this);
         zamknij.addActionListener(this);
         rezerwacje.addActionListener(this);
         konto.addActionListener(this);
@@ -44,6 +46,7 @@ public class LoggedInFrame extends JFrame implements ActionListener {
             bar.add(instruktorzy);
             bar.add(platnosc);
             bar.add(uslugi);
+            bar.add(kategorie);
         }
         program.add(zamknij);
         program.add(wyloguj);
@@ -73,7 +76,12 @@ public class LoggedInFrame extends JFrame implements ActionListener {
             JPanel panel2 = new PaymentPanel(current);
             this.setContentPane(panel2);
             this.setVisible(true);
-        } else if (source == uslugi) {
+        } else if (source == kategorie) {
+            JPanel panel2 = new KategoriePanel(current);
+            this.setContentPane(panel2);
+            this.setVisible(true);
+        }
+        if (source == uslugi) {
             JPanel panel2 = new UslugiPanel(current);
             this.setContentPane(panel2);
             this.setVisible(true);

@@ -20,11 +20,6 @@ public class UslugiEntity {
     public long getUslugaId() {
         return uslugaId;
     }
-
-    public void setUslugaId(Long uslugaId) {
-        this.uslugaId = uslugaId;
-    }
-
     public void setUslugaId(long uslugaId) {
         this.uslugaId = uslugaId;
     }

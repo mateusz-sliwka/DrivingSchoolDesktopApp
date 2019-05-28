@@ -12,6 +12,7 @@ public class KategorieEntity {
     private long kategoriaId;
     private String symbol;
     private Collection<KategorieInstruktorowEntity> kategorieInstruktorowsByKategoriaId;
+    private Collection<RezerwacjeEntity> rezerwacjesByKategoriaId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,12 +52,21 @@ public class KategorieEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "kategorieByKategoriaId")
+    @OneToMany(mappedBy = "kategorieByKategoriaId", orphanRemoval = true)
     public Collection<KategorieInstruktorowEntity> getKategorieInstruktorowsByKategoriaId() {
         return kategorieInstruktorowsByKategoriaId;
     }
 
     public void setKategorieInstruktorowsByKategoriaId(Collection<KategorieInstruktorowEntity> kategorieInstruktorowsByKategoriaId) {
         this.kategorieInstruktorowsByKategoriaId = kategorieInstruktorowsByKategoriaId;
+    }
+
+    @OneToMany(mappedBy = "kategorieByKategoriaId", orphanRemoval = true)
+    public Collection<RezerwacjeEntity> getRezerwacjesByKategoriaId() {
+        return rezerwacjesByKategoriaId;
+    }
+
+    public void setRezerwacjesByKategoriaId(Collection<RezerwacjeEntity> rezerwacjesByKategoriaId) {
+        this.rezerwacjesByKategoriaId = rezerwacjesByKategoriaId;
     }
 }

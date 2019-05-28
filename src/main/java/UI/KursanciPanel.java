@@ -93,13 +93,19 @@ class KursanciPanel extends JPanel implements ActionListener {
             refreshList();
         }
         if (source == delete) {
+            if(!kursanciTable.getSelectionModel().isSelectionEmpty()){
             long ID = Integer.parseInt((String) kursanciTable.getValueAt(kursanciTable.getSelectedRow(), 0));
             kc.deleteByID(ID);
-            refreshList();
+            refreshList();}
+            else
+                JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");
         }
         if (source == edit) {
+            if(!kursanciTable.getSelectionModel().isSelectionEmpty()){
             long ID = Integer.parseInt((String) kursanciTable.getValueAt(kursanciTable.getSelectedRow(), 0));
-            new EditKursanciFrame(ID, this);
+            new EditKursanciFrame(ID, this);}
+            else
+                JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");
         }
         if (source == add) {
             new RegisterFrame();
@@ -107,6 +113,7 @@ class KursanciPanel extends JPanel implements ActionListener {
         }
 
         if (source == plik) {
+            if(!kursanciTable.getSelectionModel().isSelectionEmpty()){
             long ID = Integer.parseInt((String) kursanciTable.getValueAt(kursanciTable.getSelectedRow(), 0));
             try {
                 String nazwa = JOptionPane.showInputDialog("Podaj nazwe pliku: ");
@@ -137,6 +144,8 @@ class KursanciPanel extends JPanel implements ActionListener {
             }
 
         }
+        else
+            JOptionPane.showMessageDialog(this,"Wybierz ktorys wiersz");
     }
 
-}
+}}

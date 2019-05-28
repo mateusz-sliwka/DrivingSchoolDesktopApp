@@ -14,7 +14,7 @@ public class KategorieInstruktorowEntity implements Serializable {
     private long instructorId;
 
     private KategorieEntity kategorieByKategoriaId;
-    private InstruktorzyEntity instruktorzyByKategoriaId;
+    private InstruktorzyEntity instruktorzyByInstructorId;
 
     @Basic
     @Column(name = "KATEGORIA_ID", nullable = false, precision = 0)
@@ -62,8 +62,7 @@ public class KategorieInstruktorowEntity implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "KATEGORIA_ID", referencedColumnName = "KATEGORIA_ID", nullable = false, insertable = false, updatable = false)
-    public KategorieEntity getKategorieByKategoriaId() {
+   @JoinColumn(name = "KATEGORIA_ID", referencedColumnName = "KATEGORIA_ID", nullable = false, insertable = false, updatable = false) public KategorieEntity getKategorieByKategoriaId() {
         return kategorieByKategoriaId;
     }
 
@@ -71,13 +70,14 @@ public class KategorieInstruktorowEntity implements Serializable {
         this.kategorieByKategoriaId = kategorieByKategoriaId;
     }
 
+
     @ManyToOne
-    @JoinColumn(name = "KATEGORIA_ID", referencedColumnName = "INSTRUKTOR_ID", nullable = false, insertable = false, updatable = false)
-    public InstruktorzyEntity getInstruktorzyByKategoriaId() {
-        return instruktorzyByKategoriaId;
+    @JoinColumn(name = "INSTRUCTOR_ID", referencedColumnName = "INSTRUKTOR_ID", nullable = false, insertable = false, updatable = false)
+    public InstruktorzyEntity getInstruktorzyByInstructorId() {
+        return instruktorzyByInstructorId;
     }
 
-    public void setInstruktorzyByKategoriaId(InstruktorzyEntity instruktorzyByKategoriaId) {
-        this.instruktorzyByKategoriaId = instruktorzyByKategoriaId;
+    public void setInstruktorzyByInstructorId(InstruktorzyEntity instruktorzyByInstructorId) {
+        this.instruktorzyByInstructorId = instruktorzyByInstructorId;
     }
 }

@@ -53,8 +53,9 @@ public class RezerwacjeControler {
 
     public void update(RezerwacjeEntity re, long id) {
         entityManager.getTransaction().begin();
-        entityManager.createQuery("UPDATE RezerwacjeEntity r SET r.uslugaId=:a, r.kursantId=:b,r.instruktorId=:c where r.rezerwacjaId=:d")
-                .setParameter("a", re.getUslugaId()).setParameter("b", re.getKursantId()).setParameter("c", re.getInstruktorId()).setParameter("d", id).executeUpdate();
+        entityManager.createQuery("UPDATE RezerwacjeEntity r SET r.uslugaId=:a, r.kursantId=:b,r.instruktorId=:c,r.dataRezerwacji=:d,r.kategoriaId=:e, r.godzRozpoczecia=:f where r.rezerwacjaId=:g")
+                .setParameter("a", re.getUslugaId()).setParameter("b", re.getKursantId()).setParameter("c", re.getInstruktorId()).setParameter("d", re.getDataRezerwacji())
+                .setParameter("e",re.getKategoriaId()).setParameter("f",re.getGodzRozpoczecia()).setParameter("g",id).executeUpdate();
         entityManager.getTransaction().commit();
     }
 }
