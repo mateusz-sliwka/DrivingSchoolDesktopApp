@@ -4,16 +4,15 @@ import Controlers.*;
 import Entities.*;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
-public class AddReservationPanelKursant extends JPanel implements ActionListener {
+public class AddReservationPanelKursant extends JPanel implements ActionListener, ItemListener {
 
 
     InstruktorzyControler ic = new InstruktorzyControler();
@@ -93,12 +92,26 @@ public class AddReservationPanelKursant extends JPanel implements ActionListener
             rok.addItem(String.valueOf(i));
 
 
-        int h = 6;
-        for (int i = 0; i < 17; i++) {
-            godzina.addItem(String.valueOf(h + i));
+        String hrozpstring=(ic.getByFS((String) instruktorBox.getSelectedItem())).getGodzRozpoczecia();
+        int hrozp = Integer.parseInt(hrozpstring.split(":")[0]);
+
+        String hzakstring=(ic.getByFS((String) instruktorBox.getSelectedItem())).getGodzZakonczenia();
+        int hzak = Integer.parseInt(hzakstring.split(":")[0]);
+        System.out.println("GODZINY:    "+hrozp+" rozp   zak "+hzak);
+        if(hrozp<hzak && hrozp<23 && hzak<23) {
+            for (int i = hrozp; i < hzak; i++) {
+                godzina.addItem(String.valueOf(i));
+            }
+        }
+        else{
+            int hdomyslna=6;
+            for (int i = hdomyslna; i < 17; i++) {
+                godzina.addItem(String.valueOf(i));
+            }
         }
 
 
+        instruktorBox.addItemListener(this);
         register.addActionListener(this);
         cancel.addActionListener(this);
         this.add(instruktorLabel);
@@ -128,11 +141,12 @@ public class AddReservationPanelKursant extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+
         if (source == cancel) {
             Window win = SwingUtilities.getWindowAncestor(this);
             ((Window) win).dispose();
         }
-        if (source == register) {
+        else if (source == register) {
             KategorieControler kc2 = new KategorieControler();
             RezerwacjeEntity re = new RezerwacjeEntity();
             re.setInstruktorId(ic.getByFS((String) instruktorBox.getSelectedItem()).getInstruktorId());
@@ -152,10 +166,41 @@ public class AddReservationPanelKursant extends JPanel implements ActionListener
                 Window win = SwingUtilities.getWindowAncestor(this);
                 ((Window) win).dispose();
             }
-            else JOptionPane.showMessageDialog(this, "Termin zajety-zmien date/godzine rezerwacji");
+            else JOptionPane.showMessageDialog(this, "Termin zajety, zmien date lub godzine");
 
         }
 
     }
 
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        Object source = e.getSource();
+        if(source==instruktorBox){
+            godzina.removeAllItems();
+            String hrozpstring=(ic.getByFS((String) instruktorBox.getSelectedItem())).getGodzRozpoczecia();
+            int hrozp = Integer.parseInt(hrozpstring.split(":")[0]);
+
+            String hzakstring=(ic.getByFS((String) instruktorBox.getSelectedItem())).getGodzZakonczenia();
+            int hzak = Integer.parseInt(hzakstring.split(":")[0]);
+            if(hrozp<hzak && hrozp<23 && hzak<23) {
+                for (int i = hrozp; i < hzak; i++) {
+                    godzina.addItem(String.valueOf(i));
+                }
+            }
+            else{
+                int hdomyslna=6;
+                for (int i = hdomyslna; i < 17; i++) {
+                    godzina.addItem(String.valueOf(i));
+                }
+            }
+            kategoria.removeAllItems();
+            KategorieControler kc3 = new KategorieControler();
+            List<KategorieEntity> kategorie = kc3.getAll();
+            for (int i = 0; i < kategorie.size(); i++) {
+                if(sprawdzCzyMaKategorie(kategorie.get(i).getSymbol(), ic.getByFS((String) instruktorBox.getSelectedItem())))
+                    kategoria.addItem(kategorie.get(i).getSymbol());
+            }
+        }
+
+    }
 }
