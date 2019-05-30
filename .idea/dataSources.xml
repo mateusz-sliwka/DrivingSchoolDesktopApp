@@ -11,5 +11,19 @@
         <property name="v$session.program" value="DataGrip" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="Entities/Hibernate" uuid="255eed2a-31a2-4d0c-8279-6ea2e6ca38f7">
+      <driver-ref>oracle</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+C:/Users/JOANA/Documents/GitHub/SzkolaJazdy-BD1/src/main/resources/META-INF/persistence.xml</remarks>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@localhost:1521:XE</jdbc-url>
+      <driver-properties>
+        <property name="v$session.program" value="DataGrip" />
+      </driver-properties>
+    </data-source>
   </component>
 </project>

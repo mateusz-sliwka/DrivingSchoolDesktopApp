@@ -31,7 +31,7 @@ public class RezerwacjeKursantPanel extends JPanel implements ActionListener{
     JButton delete = new JButton("Usuń rezerwację");
     JButton addReservation = new JButton("Dodaj rezerwację");
     JButton plik = new JButton("Wygeneruj raport Twoich rezerwacji");
-    String[] kolumny = {"ID", "Usługa", "Instruktor", "Data rezerwacji"};
+    String[] kolumny = {"ID", "Usługa", "Instruktor", "Data i godzina rezerwacji"};
     JTable rezerwacjeTable = new JTable();
     DefaultTableModel model = new DefaultTableModel(kolumny, 0);
     JScrollPane pane = new JScrollPane(rezerwacjeTable);
@@ -67,7 +67,7 @@ public class RezerwacjeKursantPanel extends JPanel implements ActionListener{
             String[] zawartosc = {Integer.toString((int) rezerwacje.get(i).getRezerwacjaId()),
                     rezerwacje.get(i).getUslugiByUslugaId().getNazwa(),
                     rezerwacje.get(i).getInstruktorzyByInstruktorId().getImieNazwisko(),
-                    (rezerwacje.get(i).getDataDodania().toString())};
+                    rezerwacje.get(i).getDataRezerwacji().toString()+ " g: " +rezerwacje.get(i).getGodzRozpoczecia()+":00"};
             model.addRow(zawartosc);
         }
     }

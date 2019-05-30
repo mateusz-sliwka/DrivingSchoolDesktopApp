@@ -56,7 +56,7 @@ public class LoggedInFrame extends JFrame implements ActionListener {
         this.setJMenuBar(bar);
         this.current = current;
         panel1 = new ReservationPanel(current);
-        this.setSize(new Dimension(800, 500));
+        this.setSize(new Dimension(800, 600));
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panel1);
         this.setVisible(true);

@@ -11,5 +11,9 @@
       <user-name>szkolajazdy</user-name>
       <introspection-schemas>*:SZKOLAJAZDY</introspection-schemas>
     </data-source>
+    <data-source name="Entities/Hibernate" uuid="255eed2a-31a2-4d0c-8279-6ea2e6ca38f7">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="ORACLE" exact-version="0" />
+      <user-name>szkolajazdy</user-name>
+    </data-source>
   </component>
 </project>
