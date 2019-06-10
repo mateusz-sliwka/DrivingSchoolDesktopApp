@@ -30,7 +30,7 @@ class InstruktorzyPanel extends JPanel implements ActionListener {
     JButton delete = new JButton("Usuń pozycję");
     JButton edit = new JButton("Edytuj pozycje");
     JButton przypisz = new JButton("Przypisz kategorie");
-    String[] kolumny = {"ID", "Imie", "Nazwisko", "Start pracy", "Koniec pracy", "Email", "Kategorie"};
+    String[] kolumny = {"ID", "Imie", "Nazwisko", "Email","Start pracy", "Koniec pracy", "Kategorie"};
     JTable rezerwacjeTable = new JTable();
     JButton add = new JButton("Dodaj instruktora");
     DefaultTableModel model = new DefaultTableModel(kolumny, 0);
